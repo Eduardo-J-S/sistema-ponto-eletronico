@@ -2,85 +2,96 @@
 
 ```mermaid
 classDiagram
-    class Usuario {
-        - id: String
-        - nome: String
-        - email: String
-        - senha: String
-        + autenticar(): Boolean
-        + recuperarSenha(): void
+    class Empresa {
+        + int id_empresa
+        + String nome
+        + String cnpj
+        + String telefone
+        + String celular
+        + String nome_dono
     }
-    
-    class Administrador {
-        + criarUsuario(): void
-        + editarUsuario(): void
-        + excluirUsuario(): void
-        + visualizarFuncionarios(): List<Funcionario>
-    }
-    Usuario <|-- Administrador
-    
-    class Funcionario {
-        - dataAdmissao: Date
-        + registrarPonto(): void
-        + visualizarHistoricoPonto(): List<RegistroDePonto>
-    }
-    Usuario <|-- Funcionario
-    
-    class RegistroDePonto {
-        - id: String
-        - dataHoraEntrada: DateTime
-        - dataHoraSaida: DateTime
-        - tipoMarcacao: String
-        + calcularHorasTrabalhadas(): Double
-    }
-    RegistroDePonto --> Funcionario
 
-    class Horario {
-        - id: String
-        - horaInicio: DateTime
-        - horaFim: DateTime
+    class Funcionario {
+        + int id_funcionario
+        + String nome
+        + String cpf
+        + Date aniversario
+        + String email
+        + String celular
+        + String setor
+        + boolean status
+        + String senha
+        + int empresa_id_empresa
     }
-    
+
+    class UsuarioAdmin {
+        + int id_usuario_admin
+        + String nome_admin
+        + String senha_admin
+        + Timestamp data_alteracao
+        + String usuario_admincol
+        + int empresa_id_empresa
+    }
+
+    class Feriado {
+        + int id_feriado
+        + String descricao
+        + Date data
+        + int empresa_id_empresa
+    }
+
+    class RegistroPonto {
+        + int id_registro
+        + DateTime data_hora_registro
+        + String tipo_registro
+        + int funcionario_id_funcionario
+    }
+
+    class Permissao {
+        + int id_permissao
+        + String descricao
+        + Date data_inicio
+        + Date data_fim
+        + int funcionario_id_funcionario
+    }
+
+    class HorarioTrabalho {
+        + int id_horario_trabalho
+        + Enum dia_semana
+        + Date hora_inicio
+        + Date hora_fim
+    }
+
     class Turno {
-        - id: String
-        - nome: String
-        + definirHorario(): void
-        + alocarFuncionario(): void
+        + int id_turno
+        + String descricao
+        + Date hora_inicio
+        + Date hora_fim
+        + int funcionario_id_funcionario
     }
-    Turno --> Horario
-    Turno --> Funcionario
-    
-    class Relatorio {
-        - id: String
-        - tipo: String
-        - dataGeracao: DateTime
-        + gerarRelatorioPresenca(): void
-        + gerarRelatorioHorasTrabalhadas(): void
-        + exportarFormato(String formato): void
+
+    class Ausencia {
+        + int id_ausencia
+        + String tipo_ausencia
+        + Date data_inicio
+        + Date data_fim
+        + int funcionario_id_funcionario
     }
-    
-    class SistemaDePagamento {
-        - id: String
-        - nome: String
-        + integrarAPI(): void
-        + sincronizarDados(): void
+
+    class FuncionarioHorario {
+        + int id_funcionario_horario
+        + int funcionario_id_funcionario
+        + int horario_trabalho_id_horario_trabalho
     }
-    
-    Usuario : +autenticar()
-    Usuario : +recuperarSenha()
-    Administrador : +criarUsuario()
-    Administrador : +editarUsuario()
-    Administrador : +excluirUsuario()
-    Administrador : +visualizarFuncionarios()
-    Funcionario : +registrarPonto()
-    Funcionario : +visualizarHistoricoPonto()
-    RegistroDePonto : +calcularHorasTrabalhadas()
-    Turno : +definirHorario()
-    Turno : +alocarFuncionario()
-    Relatorio : +gerarRelatorioPresenca()
-    Relatorio : +gerarRelatorioHorasTrabalhadas()
-    Relatorio : +exportarFormato()
-    SistemaDePagamento : +integrarAPI()
-    SistemaDePagamento : +sincronizarDados()
+
+    Empresa "1" --> "*" Funcionario : "tem"
+    Empresa "1" --> "*" UsuarioAdmin : "tem"
+    Empresa "1" --> "*" Feriado : "tem"
+    Funcionario "1" --> "*" RegistroPonto : "faz"
+    Funcionario "1" --> "*" Permissao : "tem"
+    Funcionario "1" --> "*" Turno : "está em"
+    Funcionario "1" --> "*" Ausencia : "tem"
+    Funcionario "1" --> "*" FuncionarioHorario : "tem"
+    HorarioTrabalho "1" --> "*" FuncionarioHorario : "tem"
 
 ```
