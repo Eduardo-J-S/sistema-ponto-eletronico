@@ -4,12 +4,12 @@
 classDiagram
     class Empresa {
         <<Entity>>
-        + int id_empresa
+        + int idEmpresa
         + String nome
         + String cnpj
         + String telefone
         + String celular
-        + String nome_dono
+        + String nomeDono
         + Set<Funcionario> funcionarios
         + Set<UsuarioAdmin> administradores
         + Set<Feriado> feriados
@@ -17,7 +17,7 @@ classDiagram
 
     class Funcionario {
         <<Entity>>
-        + int id_funcionario
+        + int idFuncionario
         + String nome
         + String cpf
         + Date aniversario
@@ -36,17 +36,17 @@ classDiagram
 
     class UsuarioAdmin {
         <<Entity>>
-        + int id_usuario_admin
-        + String nome_admin
-        + String senha_admin
-        + Timestamp data_alteracao
-        + String usuario_admincol
+        + int idUsuarioAdmin
+        + String nomeAdmin
+        + String senhaAdmin
+        + Timestamp dataAlteracao
+        + String usuarioAdmincol
         + Empresa empresa
     }
 
     class Feriado {
         <<Entity>>
-        + int id_feriado
+        + int idFeriado
         + String descricao
         + Date data
         + Empresa empresa
@@ -54,52 +54,52 @@ classDiagram
 
     class RegistroPonto {
         <<Entity>>
-        + int id_registro
-        + DateTime data_hora_registro
-        + String tipo_registro
+        + int idRegistro
+        + DateTime dataHoraRegistro
+        + String tipoRegistro
         + Funcionario funcionario
     }
 
     class Permissao {
         <<Entity>>
-        + int id_permissao
+        + int idPermissao
         + String descricao
-        + Date data_inicio
-        + Date data_fim
+        + Date dataInicio
+        + Date dataFim
         + Funcionario funcionario
     }
 
     class HorarioTrabalho {
         <<Entity>>
         + int id_horario_trabalho
-        + DiaSemana dia_semana
-        + LocalTime hora_inicio
-        + LocalTime hora_fim
+        + DiaSemana diaSemana
+        + LocalTime horaInicio
+        + LocalTime horaFim
     }
 
     class Turno {
         <<Entity>>
-        + int id_turno
+        + int idTurno
         + String descricao
-        + LocalTime hora_inicio
-        + LocalTime hora_fim
+        + LocalTime horaInicio
+        + LocalTime horaFim
         + Funcionario funcionario
     }
 
     class Ausencia {
         <<Entity>>
-        + int id_ausencia
-        + String tipo_ausencia
-        + Date data_inicio
-        + Date data_fim
+        + int idAusencia
+        + String tipoAusencia
+        + Date dataInicio
+        + Date dataFim
         + Funcionario funcionario
     }
 
     class FuncionarioHorario {
         <<Entity>>
-        + int id_funcionario_horario
+        + int idFuncionarioHorario
         + Funcionario funcionario
-        + HorarioTrabalho horario_trabalho
+        + HorarioTrabalho horarioTrabalho
     }
 
     Empresa "1" --> "*" Funcionario : "tem"
