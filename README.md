@@ -34,7 +34,7 @@ classDiagram
         + Set<FuncionarioHorario> horarios
     }
 
-    class UsuarioAdmin {
+    class Admin {
         <<Entity>>
         + int idUsuarioAdmin
         + String nomeAdmin
