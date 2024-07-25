@@ -103,7 +103,7 @@ classDiagram
     }
 
     Empresa "1" --> "*" Funcionario : "tem"
-    Empresa "1" --> "*" UsuarioAdmin : "tem"
+    Empresa "1" --> "*" Admin : "tem"
     Empresa "1" --> "*" Feriado : "tem"
     Funcionario "1" --> "*" RegistroPonto : "faz"
     Funcionario "1" --> "*" Permissao : "tem"
