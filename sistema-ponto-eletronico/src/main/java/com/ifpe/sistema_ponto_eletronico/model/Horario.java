@@ -1,6 +1,5 @@
 package com.ifpe.sistema_ponto_eletronico.model;
 
-public class Turno {
-
+public class Horario {
     
 }
