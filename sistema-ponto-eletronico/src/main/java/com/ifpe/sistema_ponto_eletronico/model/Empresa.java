@@ -26,7 +26,7 @@ public class Empresa {
     @OneToMany(mappedBy = "empresa")
     private Set<Feriado> feriados;
 
-    // Getters and setters
+    
     public Long getId() {
         return id;
     }

@@ -53,7 +53,7 @@ public class Funcionario {
     @OneToMany(mappedBy = "funcionario")
     private Set<Horario> horarios;
 
-    // Getters and setters
+    
     public Long getId() {
         return id;
     }
