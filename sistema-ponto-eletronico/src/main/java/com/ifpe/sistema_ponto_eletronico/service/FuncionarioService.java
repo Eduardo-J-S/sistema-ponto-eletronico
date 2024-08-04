@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ifpe.sistema_ponto_eletronico.convert.ModelMapperConvert;
 import com.ifpe.sistema_ponto_eletronico.dto.FuncionarioDTO;
@@ -43,6 +44,7 @@ public class FuncionarioService {
         return mapperConvert.convertListObject(funcionarioRepository.findAll(), FuncionarioDTO.class); 
     }
 
+    @Transactional //todas as operações de banco de dados realizadas dentro do escopo da transação são tratadas como uma única unidade de trabalho 
     public FuncionarioDTO create(FuncionarioDTO funcionarioDTO){
         logger.info("Creating one person!");
 
@@ -50,6 +52,7 @@ public class FuncionarioService {
         return mapperConvert.convertObject(funcionarioRepository.save(funcionario), FuncionarioDTO.class);
     }
 
+    @Transactional
     public FuncionarioDTO update(FuncionarioDTO funcionarioDTO){
         logger.info("Updating one person!");
 
@@ -73,7 +76,8 @@ public class FuncionarioService {
     }
 
 
-     // Método para atualizações parciais
+    // Método para atualizações parciais
+    @Transactional
     public FuncionarioDTO partialUpdate(Long id, Map<String, Object> updates) {
         logger.info("Partially updating one person!");
         
