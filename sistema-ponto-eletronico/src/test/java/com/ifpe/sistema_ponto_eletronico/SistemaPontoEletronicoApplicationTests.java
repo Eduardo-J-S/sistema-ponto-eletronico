@@ -1,13 +1,66 @@
 package com.ifpe.sistema_ponto_eletronico;
-
+import com.ifpe.sistema_ponto_eletronico.model.Admin;
+import com.ifpe.sistema_ponto_eletronico.model.Empresa;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.LocalDateTime;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class SistemaPontoEletronicoApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+        
+    }
 
+    @Test
+    void testAdmin1() {
+        Admin administrador1 = new Admin();
+        administrador1.setIdAdmin(1L);
+        administrador1.setNomeAdmin("adonai");
+        administrador1.setSenhaAdmin("1234");
+        administrador1.setDataAlteracao(LocalDateTime.now());
+        administrador1.setUsuarioAdmin("dondon");
+        administrador1.setMatricula("015726");
+
+        Empresa empresa = new Empresa();
+        administrador1.setEmpresa(empresa);
+
+        assertAll("administrador1",
+            () -> assertEquals(1L, administrador1.getIdAdmin()),
+            () -> assertEquals("adonai", administrador1.getNomeAdmin()),
+            () -> assertEquals("1234", administrador1.getSenhaAdmin()),
+            () -> assertNotNull(administrador1.getDataAlteracao()),
+            () -> assertEquals("dondon", administrador1.getUsuarioAdmin()),
+            () -> assertEquals("015726", administrador1.getMatricula()),
+            () -> assertEquals(empresa, administrador1.getEmpresa())
+        );
+    }
+
+    @Test
+    void testAdmin2() {
+        Admin administrador2 = new Admin();
+        administrador2.setIdAdmin(2L);  
+        administrador2.setNomeAdmin("EDUARDO");  
+        administrador2.setSenhaAdmin("9876");  
+        administrador2.setDataAlteracao(LocalDateTime.now());
+        administrador2.setUsuarioAdmin("DEVELOPERAPI");  
+        administrador2.setMatricula("384538"); 
+
+        Empresa empresa = new Empresa();
+        administrador2.setEmpresa(empresa);
+
+        assertAll("administrador2",
+            () -> assertEquals(2L, administrador2.getIdAdmin()),
+            () -> assertEquals("eduardo", administrador2.getNomeAdmin()),
+            () -> assertEquals("9876", administrador2.getSenhaAdmin()),
+            () -> assertNotNull(administrador2.getDataAlteracao()),
+            () -> assertEquals("DEVELOPERAPI", administrador2.getUsuarioAdmin()),
+            () -> assertEquals("384538", administrador2.getMatricula()),
+            () -> assertEquals(empresa, administrador2.getEmpresa())
+        );
+    }
 }
