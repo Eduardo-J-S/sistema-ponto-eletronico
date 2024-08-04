@@ -1,9 +1,14 @@
 package com.ifpe.sistema_ponto_eletronico.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
 public class RegistroPonto {
 
     @Id
@@ -19,37 +24,5 @@ public class RegistroPonto {
     @Enumerated(EnumType.STRING)
     private TipoRegistro tipoRegistro;
 
-    // Getters and setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getDataHora() {
-        return dataHora;
-    }
-
-    public void setDataHora(LocalDateTime dataHora) {
-        this.dataHora = dataHora;
-    }
-
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
-    }
-
-    public TipoRegistro getTipoRegistro() {
-        return tipoRegistro;
-    }
-
-    public void setTipoRegistro(TipoRegistro tipoRegistro) {
-        this.tipoRegistro = tipoRegistro;
-    }
 }
 

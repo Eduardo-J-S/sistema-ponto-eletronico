@@ -1,10 +1,15 @@
 package com.ifpe.sistema_ponto_eletronico.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 @Entity
+@Getter
+@Setter
 public class Horario {
 
     @Id
@@ -22,45 +27,5 @@ public class Horario {
     @JoinColumn(name = "funcionario_id")
     private Funcionario funcionario;
 
-    
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public DayOfWeek getDiaSemana() {
-        return diaSemana;
-    }
-
-    public void setDiaSemana(DayOfWeek diaSemana) {
-        this.diaSemana = diaSemana;
-    }
-
-    public LocalTime getHoraInicio() {
-        return horaInicio;
-    }
-
-    public void setHoraInicio(LocalTime horaInicio) {
-        this.horaInicio = horaInicio;
-    }
-
-    public LocalTime getHoraFim() {
-        return horaFim;
-    }
-
-    public void setHoraFim(LocalTime horaFim) {
-        this.horaFim = horaFim;
-    }
-
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
-    }
 }
 

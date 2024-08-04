@@ -1,9 +1,14 @@
 package com.ifpe.sistema_ponto_eletronico.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 public class Empresa {
 
     @Id
@@ -26,60 +31,4 @@ public class Empresa {
     //@OneToMany(mappedBy = "empresa")
     //private Set<Feriado> feriados;
 
-    
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCnpj() {
-        return cnpj;
-    }
-
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
-    }
-
-    public String getNomeEmpresa() {
-        return nomeEmpresa;
-    }
-
-    public void setNomeEmpresa(String nomeEmpresa) {
-        this.nomeEmpresa = nomeEmpresa;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public Set<Funcionario> getFuncionarios() {
-        return funcionarios;
-    }
-
-    public void setFuncionarios(Set<Funcionario> funcionarios) {
-        this.funcionarios = funcionarios;
-    }
-
-    public Set<Admin> getAdministradores() {
-        return administradores;
-    }
-
-    public void setAdministradores(Set<Admin> administradores) {
-        this.administradores = administradores;
-    }
-
-    // public Set<Feriado> getFeriados() {
-    //     return feriados;
-    // }
-
-    // public void setFeriados(Set<Feriado> feriados) {
-    //     this.feriados = feriados;
-    // }
 }

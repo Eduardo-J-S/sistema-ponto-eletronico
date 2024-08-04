@@ -1,9 +1,14 @@
 package com.ifpe.sistema_ponto_eletronico.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
 public class Admin {
 
     @Id
@@ -28,61 +33,5 @@ public class Admin {
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
-    
-    public Long getIdAdmin() {
-        return idAdmin;
-    }
-
-    public void setIdAdmin(Long idAdmin) {
-        this.idAdmin = idAdmin;
-    }
-
-    public String getNomeAdmin() {
-        return nomeAdmin;
-    }
-
-    public void setNomeAdmin(String nomeAdmin) {
-        this.nomeAdmin = nomeAdmin;
-    }
-
-    public String getSenhaAdmin() {
-        return senhaAdmin;
-    }
-
-    public void setSenhaAdmin(String senhaAdmin) {
-        this.senhaAdmin = senhaAdmin;
-    }
-
-    public LocalDateTime getDataAlteracao() {
-        return dataAlteracao;
-    }
-
-    public void setDataAlteracao(LocalDateTime dataAlteracao) {
-        this.dataAlteracao = dataAlteracao;
-    }
-
-    public String getUsuarioAdmin() {
-        return usuarioAdmin;
-    }
-
-    public void setUsuarioAdmin(String usuarioAdmin) {
-        this.usuarioAdmin = usuarioAdmin;
-    }
-
-    public String getMatricula() {
-        return matricula;
-    }
-
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
-    }
-
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
-    }
 }
 
