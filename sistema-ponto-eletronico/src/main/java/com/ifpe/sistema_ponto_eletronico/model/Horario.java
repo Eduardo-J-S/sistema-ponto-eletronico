@@ -18,6 +18,10 @@ public class Horario {
 
     private LocalTime horaFim;
 
+    @ManyToOne
+    @JoinColumn(name = "funcionario_id")
+    private Funcionario funcionario;
+
     
     public Long getId() {
         return id;
@@ -49,6 +53,14 @@ public class Horario {
 
     public void setHoraFim(LocalTime horaFim) {
         this.horaFim = horaFim;
+    }
+
+    public Funcionario getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
     }
 }
 

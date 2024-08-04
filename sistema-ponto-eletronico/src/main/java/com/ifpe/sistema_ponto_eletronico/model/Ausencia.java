@@ -11,7 +11,7 @@ public class Ausencia {
     private Long idAusencia;
 
     @Enumerated(EnumType.STRING)
-    private String tipoAusencia;
+    private TipoRegistro tipoAusencia;
 
     private LocalDate dataInicio;
 
@@ -30,11 +30,11 @@ public class Ausencia {
         this.idAusencia = idAusencia;
     }
 
-    public String getTipoAusencia() {
+    public TipoRegistro getTipoAusencia() {
         return tipoAusencia;
     }
 
-    public void setTipoAusencia(String tipoAusencia) {
+    public void setTipoAusencia(TipoRegistro tipoAusencia) {
         this.tipoAusencia = tipoAusencia;
     }
 

@@ -23,8 +23,8 @@ public class Empresa {
     @OneToMany(mappedBy = "empresa")
     private Set<Admin> administradores;
 
-    @OneToMany(mappedBy = "empresa")
-    private Set<Feriado> feriados;
+    //@OneToMany(mappedBy = "empresa")
+    //private Set<Feriado> feriados;
 
     
     public Long getId() {
@@ -75,11 +75,11 @@ public class Empresa {
         this.administradores = administradores;
     }
 
-    public Set<Feriado> getFeriados() {
-        return feriados;
-    }
+    // public Set<Feriado> getFeriados() {
+    //     return feriados;
+    // }
 
-    public void setFeriados(Set<Feriado> feriados) {
-        this.feriados = feriados;
-    }
+    // public void setFeriados(Set<Feriado> feriados) {
+    //     this.feriados = feriados;
+    // }
 }

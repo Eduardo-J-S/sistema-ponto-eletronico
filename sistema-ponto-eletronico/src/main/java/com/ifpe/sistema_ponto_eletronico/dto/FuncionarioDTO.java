@@ -9,7 +9,6 @@ import com.ifpe.sistema_ponto_eletronico.model.Empresa;
 import com.ifpe.sistema_ponto_eletronico.model.Horario;
 import com.ifpe.sistema_ponto_eletronico.model.Permissao;
 import com.ifpe.sistema_ponto_eletronico.model.RegistroPonto;
-import com.ifpe.sistema_ponto_eletronico.model.Turno;
 
 
 public class FuncionarioDTO implements Serializable {
@@ -26,7 +25,6 @@ public class FuncionarioDTO implements Serializable {
     private Empresa empresa;
     private Set<RegistroPonto> registrosPonto;
     private Set<Permissao> permissoes;
-    private Set<Turno> turnos;
     private Set<Ausencia> ausencias;
     private Set<Horario> horarios;
 
@@ -124,14 +122,6 @@ public class FuncionarioDTO implements Serializable {
 
     public void setPermissoes(Set<Permissao> permissoes) {
         this.permissoes = permissoes;
-    }
-
-    public Set<Turno> getTurnos() {
-        return turnos;
-    }
-
-    public void setTurnos(Set<Turno> turnos) {
-        this.turnos = turnos;
     }
 
     public Set<Ausencia> getAusencias() {

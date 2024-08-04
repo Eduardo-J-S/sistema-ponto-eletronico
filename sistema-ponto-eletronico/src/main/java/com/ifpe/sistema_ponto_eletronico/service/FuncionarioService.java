@@ -62,7 +62,6 @@ public class FuncionarioService {
         funcionario.setEmpresa(funcionario.getEmpresa());
         funcionario.setRegistrosPonto(funcionario.getRegistrosPonto());
         funcionario.setPermissoes(funcionarioDTO.getPermissoes());
-        funcionario.setTurnos(funcionarioDTO.getTurnos());
         funcionario.setAusencias(funcionarioDTO.getAusencias());
         funcionario.setHorarios(funcionarioDTO.getHorarios());
         
