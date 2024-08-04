@@ -1,7 +1,11 @@
 package com.ifpe.sistema_ponto_eletronico.service;
 
 import java.util.logging.Logger;
+import org.springframework.util.ReflectionUtils;
+
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,6 +71,24 @@ public class FuncionarioService {
         
         return mapperConvert.convertObject(funcionarioRepository.save(funcionario), FuncionarioDTO.class);
     }
+
+
+     // Método para atualizações parciais
+    public FuncionarioDTO partialUpdate(Long id, Map<String, Object> updates) {
+        logger.info("Partially updating one person!");
+        
+        Funcionario funcionario = funcionarioRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado! Id: " + id));
+    
+        updates.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(Funcionario.class, key);
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, funcionario, value);
+        });
+    
+        return mapperConvert.convertObject(funcionarioRepository.save(funcionario), FuncionarioDTO.class);
+    }
+    
 
     public void delete(Long id){
         logger.info("Deleting one person!");
