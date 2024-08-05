@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ifpe.sistema_ponto_eletronico.convert.ModelMapperConvert;
 import com.ifpe.sistema_ponto_eletronico.dto.FuncionarioDTO;
+import com.ifpe.sistema_ponto_eletronico.dto.FuncionarioResponseDTO;
 import com.ifpe.sistema_ponto_eletronico.service.FuncionarioService;
 
 import jakarta.validation.Valid;
@@ -29,6 +31,9 @@ public class FuncionarioController {
     
     @Autowired
     FuncionarioService funcionarioService;
+
+    @Autowired
+    ModelMapperConvert modelMapper;
 
     @GetMapping("/{id}")
     public ResponseEntity<FuncionarioDTO> findById(@PathVariable Long id){
@@ -43,9 +48,10 @@ public class FuncionarioController {
     }
 
     @PostMapping()
-    public ResponseEntity<FuncionarioDTO> create(@Valid @RequestBody FuncionarioDTO dto){
+    public ResponseEntity<FuncionarioResponseDTO> create(@Valid @RequestBody FuncionarioDTO dto){
         FuncionarioDTO createdFuncionario = funcionarioService.create(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdFuncionario);
+        FuncionarioResponseDTO funcionarioResponseDTO = modelMapper.convertObject(createdFuncionario, FuncionarioResponseDTO.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioResponseDTO);
     }
 
     @PutMapping()
