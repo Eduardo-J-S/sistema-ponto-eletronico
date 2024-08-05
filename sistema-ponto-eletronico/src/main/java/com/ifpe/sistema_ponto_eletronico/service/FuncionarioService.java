@@ -13,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ifpe.sistema_ponto_eletronico.convert.ModelMapperConvert;
 import com.ifpe.sistema_ponto_eletronico.dto.FuncionarioDTO;
+import com.ifpe.sistema_ponto_eletronico.model.Empresa;
 import com.ifpe.sistema_ponto_eletronico.model.Funcionario;
+import com.ifpe.sistema_ponto_eletronico.repository.EmpresaRepository;
 import com.ifpe.sistema_ponto_eletronico.repository.FuncionarioRepository;
 import com.ifpe.sistema_ponto_eletronico.service.exceptions.DataBindingViolationException;
 import com.ifpe.sistema_ponto_eletronico.service.exceptions.ObjectNotFoundException;
@@ -28,6 +30,9 @@ public class FuncionarioService {
 
     @Autowired
     ModelMapperConvert mapperConvert;
+
+    @Autowired
+    EmpresaRepository empresaRepository;
     
     public FuncionarioDTO findById(Long id) {
         logger.info("Finding one person!");
@@ -48,7 +53,14 @@ public class FuncionarioService {
     public FuncionarioDTO create(FuncionarioDTO funcionarioDTO){
         logger.info("Creating one person!");
 
+        // Verifica se a empresa existe
+        Long empresaId = funcionarioDTO.getEmpresa().getId();
+        Empresa empresa = empresaRepository.findById(empresaId)
+             .orElseThrow(() -> new ObjectNotFoundException("Empresa não encontrada! Id: " + empresaId));
+
         Funcionario funcionario = mapperConvert.convertObject(funcionarioDTO, Funcionario.class);
+        funcionario.setEmpresa(empresa);
+
         return mapperConvert.convertObject(funcionarioRepository.save(funcionario), FuncionarioDTO.class);
     }
 
