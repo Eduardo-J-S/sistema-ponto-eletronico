@@ -3,7 +3,6 @@ import com.ifpe.sistema_ponto_eletronico.model.Admin;
 import com.ifpe.sistema_ponto_eletronico.model.Empresa;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -63,4 +62,5 @@ class SistemaPontoEletronicoApplicationTests {
             () -> assertEquals(empresa, administrador2.getEmpresa())
         );
     }
+
 }
