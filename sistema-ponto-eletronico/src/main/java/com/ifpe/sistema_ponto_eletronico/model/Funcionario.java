@@ -11,6 +11,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -51,6 +52,7 @@ public class Funcionario {
 
     @ManyToOne
     @JoinColumn(name = "empresa_id")
+    @JsonBackReference
     private Empresa empresa;
 
     @JsonIgnore // Para evitar referência circular
