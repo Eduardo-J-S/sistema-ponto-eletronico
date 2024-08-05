@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ifpe.sistema_ponto_eletronico.convert.ModelMapperConvert;
@@ -36,15 +37,24 @@ public class FuncionarioController {
     ModelMapperConvert modelMapper;
 
     @GetMapping("/{id}")
-    public ResponseEntity<FuncionarioDTO> findById(@PathVariable Long id){
+    public ResponseEntity<FuncionarioResponseDTO> findById(@PathVariable Long id){
         FuncionarioDTO FuncionarioDTO = funcionarioService.findById(id);
-        return ResponseEntity.ok().body(FuncionarioDTO);
+        FuncionarioResponseDTO funcionarioResponseDTO = modelMapper.convertObject(FuncionarioDTO, FuncionarioResponseDTO.class);
+        return ResponseEntity.ok().body(funcionarioResponseDTO);
+    }
+
+    @GetMapping(params = "cpfOrMatricula")
+    public ResponseEntity<FuncionarioResponseDTO> getFuncionarioByCpfOrMatricula(@RequestParam("cpfOrMatricula") String cpfOrMatricula){
+        FuncionarioDTO FuncionarioDTO = funcionarioService.findByCpfOrMatricula(cpfOrMatricula);
+        FuncionarioResponseDTO funcionarioResponseDTO = modelMapper.convertObject(FuncionarioDTO, FuncionarioResponseDTO.class);
+        return ResponseEntity.ok().body(funcionarioResponseDTO);
     }
 
     @GetMapping()
-    public ResponseEntity<List<FuncionarioDTO>> findAll() {
+    public ResponseEntity<List<FuncionarioResponseDTO>> findAll() {
         List<FuncionarioDTO> funcionarios = funcionarioService.findAll();
-        return ResponseEntity.ok().body(funcionarios);
+        List<FuncionarioResponseDTO> funcionarioResponseDTO = modelMapper.convertListObject(funcionarios, FuncionarioResponseDTO.class);
+        return ResponseEntity.ok().body(funcionarioResponseDTO);
     }
 
     @PostMapping()
@@ -55,9 +65,10 @@ public class FuncionarioController {
     }
 
     @PutMapping()
-    public ResponseEntity<FuncionarioDTO> update(@Valid @RequestBody FuncionarioDTO dto) {
+    public ResponseEntity<FuncionarioResponseDTO> update(@Valid @RequestBody FuncionarioDTO dto) {
         FuncionarioDTO updatedFuncionario = funcionarioService.update(dto);
-        return ResponseEntity.ok().body(updatedFuncionario);
+        FuncionarioResponseDTO funcionarioResponseDTO = modelMapper.convertObject(updatedFuncionario, FuncionarioResponseDTO.class);
+        return ResponseEntity.ok().body(funcionarioResponseDTO);
     }
 
     @DeleteMapping("/{id}")
@@ -68,8 +79,9 @@ public class FuncionarioController {
 
     // Novo endpoint para atualizações parciais
     @PatchMapping("/{id}")
-    public ResponseEntity<FuncionarioDTO> partialUpdate(@PathVariable Long id, @Valid @RequestBody Map<String, Object> updates) {
+    public ResponseEntity<FuncionarioResponseDTO> partialUpdate(@PathVariable Long id, @Valid @RequestBody Map<String, Object> updates) {
         FuncionarioDTO updatedFuncionario = funcionarioService.partialUpdate(id, updates);
-        return ResponseEntity.ok().body(updatedFuncionario);
+        FuncionarioResponseDTO funcionarioResponseDTO = modelMapper.convertObject(updatedFuncionario, FuncionarioResponseDTO.class);
+        return ResponseEntity.ok().body(funcionarioResponseDTO);
     }
 }

@@ -38,9 +38,18 @@ public class FuncionarioService {
         logger.info("Finding one person!");
 
         Funcionario funcionario = funcionarioRepository.findById(id).orElseThrow(() -> 
-            new ObjectNotFoundException( "Usuário não encontrado! Id: " + id + ", Tipo: " + Funcionario.class.getName()));
+            new ObjectNotFoundException("Usuário não encontrado! Id: " + id + ", Tipo: " + Funcionario.class.getName()));
  
         return mapperConvert.convertObject(funcionario, FuncionarioDTO.class);
+    }
+
+    public FuncionarioDTO findByCpfOrMatricula(String cpfOrMatricula){
+        logger.info("Finding one person by CPF or Matricula!");
+
+        Funcionario funcionario = funcionarioRepository.findByCpfOrMatricula(cpfOrMatricula)
+            .orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado! cpf ou matricula: " + cpfOrMatricula));
+
+            return mapperConvert.convertObject(funcionario, FuncionarioDTO.class);
     }
 
     public List<FuncionarioDTO> findAll(){
