@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -14,44 +17,59 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ifpe.sistema_ponto_eletronico.convert.ModelMapperConvert;
 import com.ifpe.sistema_ponto_eletronico.dto.FuncionarioDTO;
+import com.ifpe.sistema_ponto_eletronico.dto.FuncionarioResponseDTO;
 import com.ifpe.sistema_ponto_eletronico.service.FuncionarioService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/funcionario/v1")
+@Validated
 public class FuncionarioController {
     
     @Autowired
     FuncionarioService funcionarioService;
 
+    @Autowired
+    ModelMapperConvert modelMapper;
+
     @GetMapping("/{id}")
-    public FuncionarioDTO findById(@PathVariable Long id){
-        return funcionarioService.findById(id);
+    public ResponseEntity<FuncionarioDTO> findById(@PathVariable Long id){
+        FuncionarioDTO FuncionarioDTO = funcionarioService.findById(id);
+        return ResponseEntity.ok().body(FuncionarioDTO);
     }
 
     @GetMapping()
-    public List<FuncionarioDTO> findAll(){
-        return funcionarioService.findAll();
+    public ResponseEntity<List<FuncionarioDTO>> findAll() {
+        List<FuncionarioDTO> funcionarios = funcionarioService.findAll();
+        return ResponseEntity.ok().body(funcionarios);
     }
 
     @PostMapping()
-    public FuncionarioDTO create(@RequestBody FuncionarioDTO dto){
-        return funcionarioService.create(dto);
+    public ResponseEntity<FuncionarioResponseDTO> create(@Valid @RequestBody FuncionarioDTO dto){
+        FuncionarioDTO createdFuncionario = funcionarioService.create(dto);
+        FuncionarioResponseDTO funcionarioResponseDTO = modelMapper.convertObject(createdFuncionario, FuncionarioResponseDTO.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioResponseDTO);
     }
 
     @PutMapping()
-    public FuncionarioDTO update(@RequestBody FuncionarioDTO dto){
-        return funcionarioService.update(dto);
+    public ResponseEntity<FuncionarioDTO> update(@Valid @RequestBody FuncionarioDTO dto) {
+        FuncionarioDTO updatedFuncionario = funcionarioService.update(dto);
+        return ResponseEntity.ok().body(updatedFuncionario);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         funcionarioService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
     // Novo endpoint para atualizações parciais
     @PatchMapping("/{id}")
-    public FuncionarioDTO partialUpdate(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
-        return funcionarioService.partialUpdate(id, updates);
+    public ResponseEntity<FuncionarioDTO> partialUpdate(@PathVariable Long id, @Valid @RequestBody Map<String, Object> updates) {
+        FuncionarioDTO updatedFuncionario = funcionarioService.partialUpdate(id, updates);
+        return ResponseEntity.ok().body(updatedFuncionario);
     }
 }

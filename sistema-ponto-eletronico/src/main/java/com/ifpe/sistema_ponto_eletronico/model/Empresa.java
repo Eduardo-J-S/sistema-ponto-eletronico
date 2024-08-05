@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Getter
 @Setter
@@ -23,6 +25,7 @@ public class Empresa {
     private String telefone;
 
     @OneToMany(mappedBy = "empresa")
+    @JsonManagedReference
     private Set<Funcionario> funcionarios;
 
     @OneToMany(mappedBy = "empresa")

@@ -9,10 +9,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ifpe.sistema_ponto_eletronico.convert.ModelMapperConvert;
 import com.ifpe.sistema_ponto_eletronico.dto.FuncionarioDTO;
+import com.ifpe.sistema_ponto_eletronico.model.Empresa;
 import com.ifpe.sistema_ponto_eletronico.model.Funcionario;
+import com.ifpe.sistema_ponto_eletronico.repository.EmpresaRepository;
 import com.ifpe.sistema_ponto_eletronico.repository.FuncionarioRepository;
 import com.ifpe.sistema_ponto_eletronico.service.exceptions.DataBindingViolationException;
 import com.ifpe.sistema_ponto_eletronico.service.exceptions.ObjectNotFoundException;
@@ -27,6 +30,9 @@ public class FuncionarioService {
 
     @Autowired
     ModelMapperConvert mapperConvert;
+
+    @Autowired
+    EmpresaRepository empresaRepository;
     
     public FuncionarioDTO findById(Long id) {
         logger.info("Finding one person!");
@@ -43,13 +49,22 @@ public class FuncionarioService {
         return mapperConvert.convertListObject(funcionarioRepository.findAll(), FuncionarioDTO.class); 
     }
 
+    @Transactional //todas as operações de banco de dados realizadas dentro do escopo da transação são tratadas como uma única unidade de trabalho 
     public FuncionarioDTO create(FuncionarioDTO funcionarioDTO){
         logger.info("Creating one person!");
 
+        // Verifica se a empresa existe
+        Long empresaId = funcionarioDTO.getEmpresa().getId();
+        Empresa empresa = empresaRepository.findById(empresaId)
+             .orElseThrow(() -> new ObjectNotFoundException("Empresa não encontrada! Id: " + empresaId));
+
         Funcionario funcionario = mapperConvert.convertObject(funcionarioDTO, Funcionario.class);
+        funcionario.setEmpresa(empresa);
+
         return mapperConvert.convertObject(funcionarioRepository.save(funcionario), FuncionarioDTO.class);
     }
 
+    @Transactional
     public FuncionarioDTO update(FuncionarioDTO funcionarioDTO){
         logger.info("Updating one person!");
 
@@ -73,7 +88,8 @@ public class FuncionarioService {
     }
 
 
-     // Método para atualizações parciais
+    // Método para atualizações parciais
+    @Transactional
     public FuncionarioDTO partialUpdate(Long id, Map<String, Object> updates) {
         logger.info("Partially updating one person!");
         
