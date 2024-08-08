@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -29,8 +30,11 @@ public class RegistroPontoService {
         
         LocalDateTime dataHoraAtual = LocalDateTime.now().withSecond(0).withNano(0);
         LocalDate dataAtual = dataHoraAtual.toLocalDate();
-
-        List<RegistroPonto> registrosDoDia = registroPontoRepository.findByFuncionarioAndDataHora(registroPontoDTO.getFuncionario(), dataAtual);
+        
+        LocalDateTime inicioDoDia = dataAtual.atTime(LocalTime.MIN);
+        LocalDateTime fimDoDia = dataAtual.atTime(LocalTime.MAX);
+    
+        List<RegistroPonto> registrosDoDia = registroPontoRepository.findByFuncionarioAndDataHoraBetween(registroPontoDTO.getFuncionario(), inicioDoDia, fimDoDia);
 
         boolean existeRegistroInicio = registrosDoDia.stream().anyMatch(registro -> registro.getTipoRegistro() == TipoRegistro.INICIO);
         boolean existeRegistroFim = registrosDoDia.stream().anyMatch(registro -> registro.getTipoRegistro() == TipoRegistro.FIM);
