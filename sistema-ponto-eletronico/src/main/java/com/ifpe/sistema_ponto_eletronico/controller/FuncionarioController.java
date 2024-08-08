@@ -84,4 +84,13 @@ public class FuncionarioController {
         FuncionarioResponseDTO funcionarioResponseDTO = modelMapper.convertObject(updatedFuncionario, FuncionarioResponseDTO.class);
         return ResponseEntity.ok().body(funcionarioResponseDTO);
     }
+
+
+
+    @GetMapping("/empresa/{empresaCnpj}")
+    public ResponseEntity<List<FuncionarioResponseDTO>> getFuncionariosByEmpresaId(@PathVariable String empresaCnpj) {
+        List<FuncionarioDTO> funcionarios = funcionarioService.findFuncionariosByEmpresaCnpj(empresaCnpj);
+        List<FuncionarioResponseDTO> funcionarioResponseDTOs = modelMapper.convertListObject(funcionarios, FuncionarioResponseDTO.class);
+        return ResponseEntity.ok().body(funcionarioResponseDTOs);
+    }
 }

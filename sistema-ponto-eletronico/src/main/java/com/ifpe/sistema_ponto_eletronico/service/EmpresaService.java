@@ -67,7 +67,7 @@ public class EmpresaService {
 
         empresa.setNomeEmpresa(empresaDTO.getNomeEmpresa());
         empresa.setTelefone(empresaDTO.getTelefone());
-        empresa.setCnpj(empresa.getCnpj());
+        empresa.setCnpj(empresaDTO.getCnpj());
         
         return mapperConvert.convertObject(empresaRepository.save(empresa), EmpresaDTO.class);
     }

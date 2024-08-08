@@ -128,4 +128,16 @@ public class FuncionarioService {
         }
         
     }
+
+    //buscar funcionarios da empresa pelo cnpj
+    public List<FuncionarioDTO> findFuncionariosByEmpresaCnpj(String empresaCnpj) {
+        logger.info("Finding employees for company with CNPJ: " + empresaCnpj);
+
+        Empresa empresa = empresaRepository.findByCnpj(empresaCnpj)
+            .orElseThrow(() -> new ObjectNotFoundException("Empresa não encontrada! CNPJ: " + empresaCnpj));
+
+        List<Funcionario> funcionarios = funcionarioRepository.findByEmpresa(empresa);
+        return mapperConvert.convertListObject(funcionarios, FuncionarioDTO.class);
+        
+    }
 }
