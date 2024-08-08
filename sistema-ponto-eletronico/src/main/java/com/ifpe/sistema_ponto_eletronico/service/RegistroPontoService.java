@@ -9,6 +9,8 @@ import com.ifpe.sistema_ponto_eletronico.model.TipoRegistro;
 import com.ifpe.sistema_ponto_eletronico.repository.RegistroPontoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -25,24 +27,30 @@ public class RegistroPontoService {
     public RegistroPontoDTO create(RegistroPontoDTO registroPontoDTO){
 
         
+        LocalDateTime dataHoraAtual = LocalDateTime.now().withSecond(0).withNano(0);
+        LocalDate dataAtual = dataHoraAtual.toLocalDate();
 
-        RegistroPonto ultimoRegistro = registroPontoRepository.findTopByFuncionarioOrderByDataHoraDesc(registroPontoDTO.getFuncionario());
+        List<RegistroPonto> registrosDoDia = registroPontoRepository.findByFuncionarioAndDataHora(registroPontoDTO.getFuncionario(), dataAtual);
+
+        boolean existeRegistroInicio = registrosDoDia.stream().anyMatch(registro -> registro.getTipoRegistro() == TipoRegistro.INICIO);
+        boolean existeRegistroFim = registrosDoDia.stream().anyMatch(registro -> registro.getTipoRegistro() == TipoRegistro.FIM);
 
         // Verifica se o tipo de registro é INICIO
         if (registroPontoDTO.getTipoRegistro() == TipoRegistro.INICIO) {
-            if (ultimoRegistro != null && ultimoRegistro.getTipoRegistro() == TipoRegistro.INICIO) {
+            if (existeRegistroInicio) {
                 throw new IllegalArgumentException("Já existe um registro de início!");
             }
         }
 
         // Verifica se o tipo de registro é FIM e se há um INICIO correspondente
         if (registroPontoDTO.getTipoRegistro() == TipoRegistro.FIM) {
-            if (ultimoRegistro == null || ultimoRegistro.getTipoRegistro() != TipoRegistro.INICIO) {
+            if (!existeRegistroInicio) {
                 throw new IllegalArgumentException("Início NÃO registrado!");
             }
+            if(existeRegistroFim){
+                throw new IllegalArgumentException("Já existe um registro de fim no mesmo dia.");
+            }
         }
-
-        LocalDateTime dataHoraAtual = LocalDateTime.now().withSecond(0).withNano(0);
 
         RegistroPonto registroPonto = mapperConvert.convertObject(registroPontoDTO, RegistroPonto.class);
 

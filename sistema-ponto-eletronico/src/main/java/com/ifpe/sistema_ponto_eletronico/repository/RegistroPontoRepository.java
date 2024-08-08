@@ -1,5 +1,6 @@
 package com.ifpe.sistema_ponto_eletronico.repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,5 +17,7 @@ public interface RegistroPontoRepository extends JpaRepository<RegistroPonto, Lo
     List<RegistroPonto> findByFuncionario(Funcionario funcionario);
 
     List<RegistroPonto> findByFuncionarioAndDataHoraBetween(Funcionario funcionario, LocalDateTime inicio, LocalDateTime fim);
+
+    List<RegistroPonto> findByFuncionarioAndDataHora(Funcionario funcionario, LocalDate data);
 
 }
