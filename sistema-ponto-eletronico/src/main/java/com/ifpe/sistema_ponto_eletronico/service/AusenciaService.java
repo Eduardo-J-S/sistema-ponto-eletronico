@@ -28,10 +28,10 @@ public class AusenciaService {
     @Autowired
     FuncionarioRepository funcionarioRepository;
 
-    public List<AusenciaDTO> findAusenciasByFuncionarioCpf(String funcionarioCpf) {
+    public List<AusenciaDTO> findAusenciasByFuncionarioCpf(Funcionario funcionarioCpf) {
         logger.info("Finding absences for employee with CPF: " + funcionarioCpf);
 
-        Funcionario funcionario = funcionarioRepository.findByCpfOrMatricula(funcionarioCpf)
+        Funcionario funcionario = funcionarioRepository.findByCpfOrMatricula(funcionarioCpf.getCpf())
             .orElseThrow(() -> new ObjectNotFoundException("Funcionario não encontrada! CPF: " + funcionarioCpf));
 
         List<Ausencia> ausencias = ausenciaRespository.findByFuncionario(funcionario);
