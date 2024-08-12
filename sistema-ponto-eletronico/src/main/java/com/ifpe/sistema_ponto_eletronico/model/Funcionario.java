@@ -39,7 +39,7 @@ public class Funcionario {
     private LocalDate dataNascimento;
 
     @Column(unique = true, nullable = false)
-    @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "CPF deve estar no formato 000.000.000-00")
+    //@Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "CPF deve estar no formato 000.000.000-00")
     @NotNull(message = "CPF é obrigatório")
     private String cpf;
 
