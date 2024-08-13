@@ -9,5 +9,5 @@ import com.ifpe.sistema_ponto_eletronico.model.Funcionario;
 
 public interface AusenciaRespository extends JpaRepository<Ausencia, Long> {
     
-    List<Ausencia> findByFuncionario(Funcionario ausencia);
+    List<Ausencia> findByFuncionario(Funcionario funcionario);
 }

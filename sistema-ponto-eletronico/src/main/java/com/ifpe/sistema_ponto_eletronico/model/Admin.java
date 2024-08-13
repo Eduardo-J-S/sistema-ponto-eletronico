@@ -13,7 +13,7 @@ public class Admin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idAdmin;
+    private Long id;
 
     private String nomeAdmin;
 
