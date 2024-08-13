@@ -42,9 +42,18 @@ public class HorarioService {
     public HorarioDTO create(HorarioDTO horarioDTO){
         logger.info("Creating one hour!");
 
+        Funcionario funcionario = funcionarioRepository.findById(horarioDTO.getFuncionario().getId())
+        .orElseThrow(() -> new ObjectNotFoundException("Funcionario não encontrada! CPF: " + horarioDTO.getFuncionario().getCpf()));
+
         Horario horario = mapperConvert.convertObject(horarioDTO, Horario.class);
 
-        return mapperConvert.convertObject(horarioRepository.save(horario), HorarioDTO.class);
+        HorarioDTO horarioSave = mapperConvert.convertObject(horarioRepository.save(horario), HorarioDTO.class);
+
+        funcionario.getHorarios().add(horario);
+
+        funcionarioRepository.save(funcionario);
+
+        return horarioSave;
     }
 
     @Transactional
