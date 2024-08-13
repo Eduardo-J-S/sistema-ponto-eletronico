@@ -3,14 +3,14 @@ package com.ifpe.sistema_ponto_eletronico.repository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.time.LocalDateTime;
+// import java.time.LocalDateTime;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ifpe.sistema_ponto_eletronico.model.Funcionario;
 import com.ifpe.sistema_ponto_eletronico.model.RegistroPonto;
 
-import java.util.Set;
+// import java.util.Set;
 
 public interface RegistroPontoRepository extends JpaRepository<RegistroPonto, Long> {
 
