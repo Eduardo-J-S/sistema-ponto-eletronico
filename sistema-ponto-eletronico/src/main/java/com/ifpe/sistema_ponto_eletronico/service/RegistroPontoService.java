@@ -72,5 +72,4 @@ public class RegistroPontoService {
         return registroPontoRepository.findByFuncionarioAndDataHoraBetween(funcionario, inicio, fim);
     }
     
-    
 }

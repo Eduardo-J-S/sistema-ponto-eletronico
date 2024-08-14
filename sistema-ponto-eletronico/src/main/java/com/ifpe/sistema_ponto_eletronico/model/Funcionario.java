@@ -3,7 +3,6 @@ package com.ifpe.sistema_ponto_eletronico.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,7 +38,6 @@ public class Funcionario {
     private LocalDate dataNascimento;
 
     @Column(unique = true, nullable = false)
-    //@Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "CPF deve estar no formato 000.000.000-00")
     @NotNull(message = "CPF é obrigatório")
     private String cpf;
 

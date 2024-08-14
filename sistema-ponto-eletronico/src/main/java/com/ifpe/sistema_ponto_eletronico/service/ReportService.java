@@ -18,6 +18,7 @@ import com.ifpe.sistema_ponto_eletronico.repository.RegistroPontoRepository;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -78,6 +79,8 @@ public class ReportService {
         DateTimeFormatter dayOfMonthFormatter = DateTimeFormatter.ofPattern("dd");
 
         LocalDate currentDate = startDate;
+        long totalHoraExtra = 0;
+        long totalHoraFalta = 0;
         while (!currentDate.isAfter(endDate)) {
             // Formatar o dia da semana e o dia do mês
             String dayOfWeek = currentDate.format(dayOfWeekFormatter);
@@ -89,16 +92,85 @@ public class ReportService {
 
             boolean horarioCorrespondenteEncontrado = false;
 
+            long resultadoHoraExtra = 0;
+                    long resultadoHoraFalta = 0;
+
             for (Horario horario : horarios) {
                 if (horario.getDiaSemana().equals(currentDate.getDayOfWeek())) {
                     // Encontra o registro de ponto correspondente
                     for (RegistroPonto registro : registros) {
+                        
                         if (registro.getDataHora().toLocalDate().equals(currentDate)) {
+
                             if (registro.getTipoRegistro().toString().equals("INICIO")) {
                                 dataRow.createCell(2).setCellValue(registro.getDataHora().toLocalTime().toString());
+                                if (registro.getDataHora().toLocalTime().isAfter(horario.getHoraInicio())) {
+                                    Duration duration = Duration.between(
+                                            horario.getHoraInicio(), registro.getDataHora().toLocalTime());
+
+                                    long totalMinutes = duration.toMinutes();
+
+                                    resultadoHoraFalta += totalMinutes;
+                                    long hours = resultadoHoraFalta / 60; // Total de horas
+                                    long minutes = resultadoHoraFalta % 60; // Minutos restantes
+
+                                    String resultado = String.format("%02d:%02d", hours, minutes);
+
+                                    totalHoraFalta += totalMinutes;
+
+                                    dataRow.createCell(5).setCellValue(resultado);
+                                } else if (registro.getDataHora().toLocalTime().isBefore(horario.getHoraInicio())) {
+                                    Duration duration = Duration.between(
+                                            registro.getDataHora().toLocalTime(), horario.getHoraInicio());
+
+                                    long totalMinutes = duration.toMinutes();
+
+                                    resultadoHoraExtra += totalMinutes;
+                                    long hours = resultadoHoraExtra / 60; // Total de horas
+                                    long minutes = resultadoHoraExtra % 60; // Minutos restantes
+
+                                    String resultado = String.format("%02d:%02d", hours, minutes);
+
+                                    totalHoraExtra += totalMinutes;
+
+                                    dataRow.createCell(4).setCellValue(resultado);
+                                }
                             } else if (registro.getTipoRegistro().toString().equals("FIM")) {
                                 dataRow.createCell(3).setCellValue(registro.getDataHora().toLocalTime().toString());
+
+                                if (registro.getDataHora().toLocalTime().isAfter(horario.getHoraFim())) {
+                                    Duration duration = Duration.between(
+                                            horario.getHoraFim(), registro.getDataHora().toLocalTime());
+
+                                    long totalMinutes = duration.toMinutes();
+
+                                    resultadoHoraExtra += totalMinutes;
+                                    long hours = resultadoHoraExtra / 60; // Total de horas
+                                    long minutes = resultadoHoraExtra % 60; // Minutos restantes
+
+                                    String resultado = String.format("%02d:%02d", hours, minutes);
+
+                                    totalHoraExtra += totalMinutes;
+
+                                    dataRow.createCell(4).setCellValue(resultado);
+                                } else if (registro.getDataHora().toLocalTime().isBefore(horario.getHoraFim())) {
+                                    Duration duration = Duration.between(
+                                            registro.getDataHora().toLocalTime(), horario.getHoraFim());
+
+                                    long totalMinutes = duration.toMinutes();
+
+                                    resultadoHoraFalta += totalMinutes;
+                                    long hours = resultadoHoraFalta / 60; // Total de horas
+                                    long minutes = resultadoHoraFalta % 60; // Minutos restantes
+
+                                    String resultado = String.format("%02d:%02d", hours, minutes);
+
+                                    totalHoraFalta += totalMinutes;
+
+                                    dataRow.createCell(5).setCellValue(resultado);
+                                }
                             }
+
                             horarioCorrespondenteEncontrado = true;
                         }
                     }
@@ -111,6 +183,9 @@ public class ReportService {
 
             currentDate = currentDate.plusDays(1);
         }
+        // Chama o método para adicionar a linha "Totais"
+        adicionarTotais(sheet, dataRowIndex, totalHoraExtra, totalHoraFalta);
+
         ServletOutputStream ops = response.getOutputStream();
         workbook.write(ops);
         workbook.close();
@@ -174,4 +249,32 @@ public class ReportService {
         sheet.setColumnWidth(5, 4000);
         sheet.setColumnWidth(6, 4000);
     }
+
+    private void adicionarTotais(HSSFSheet sheet, int dataRowIndex, long totalHoraExtra, long totalHoraFalta) {
+        long hoursHoraExtra = totalHoraExtra / 60; 
+        long minutesHoraExtra = totalHoraExtra % 60;
+        String resultadoHoraExtra = String.format("%02d:%02d", hoursHoraExtra, minutesHoraExtra);
+
+        long hoursHoraFalta = totalHoraFalta / 60; 
+        long minutesHoraFalta = totalHoraFalta % 60; 
+        String resultadoHoraFalta = String.format("%02d:%02d", hoursHoraFalta, minutesHoraFalta);
+
+        // Adiciona a linha "Totais" ao final
+        HSSFRow totalRow = sheet.createRow(dataRowIndex++);
+
+        // Crie a célula "Totais" na primeira coluna da nova linha
+        HSSFCell totalCell = totalRow.createCell(0);
+        totalCell.setCellValue("Totais");
+
+        totalRow.createCell(4).setCellValue(resultadoHoraExtra);
+        totalRow.createCell(5).setCellValue(resultadoHoraFalta);
+
+        // Estilize a célula "Totais"
+        HSSFCellStyle totalStyle = sheet.getWorkbook().createCellStyle();
+        HSSFFont totalFont = sheet.getWorkbook().createFont();
+        totalFont.setBold(true);
+        totalStyle.setFont(totalFont);
+        totalCell.setCellStyle(totalStyle);
+    }
+
 }
