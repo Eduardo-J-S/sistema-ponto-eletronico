@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ifpe.sistema_ponto_eletronico.model.Funcionario;
 import com.ifpe.sistema_ponto_eletronico.model.Horario;
+import com.ifpe.sistema_ponto_eletronico.model.Permissao;
 import com.ifpe.sistema_ponto_eletronico.model.RegistroPonto;
 import com.ifpe.sistema_ponto_eletronico.repository.FuncionarioRepository;
 import com.ifpe.sistema_ponto_eletronico.repository.RegistroPontoRepository;
@@ -21,6 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -63,6 +65,13 @@ public class ReportService {
         System.out.println(horarios.size());
         horarios.forEach(horario -> System.out.println(horario + " Horarios"));
 
+        Set<Permissao> permissoes = funcionario.getPermissoes();
+        List<Permissao> listPermissoes = new ArrayList<>(permissoes);
+
+        // Ordena a lista de permissões por data de início (mais antiga primeiro)
+        listPermissoes.sort((p1, p2) -> p1.getDataInicio().compareTo(p2.getDataInicio()));
+
+
         // Cria o workbook e a planilha
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("Espelho de Ponto");
@@ -81,6 +90,9 @@ public class ReportService {
         LocalDate currentDate = startDate;
         long totalHoraExtra = 0;
         long totalHoraFalta = 0;
+
+        int permissaoCount = 0;
+        Permissao currentPermissao = listPermissoes.get(permissaoCount);
         while (!currentDate.isAfter(endDate)) {
             // Formatar o dia da semana e o dia do mês
             String dayOfWeek = currentDate.format(dayOfWeekFormatter);
@@ -93,13 +105,37 @@ public class ReportService {
             boolean horarioCorrespondenteEncontrado = false;
 
             long resultadoHoraExtra = 0;
-                    long resultadoHoraFalta = 0;
+            long resultadoHoraFalta = 0;
+
+            currentPermissao = listPermissoes.get(permissaoCount);
+
+            System.out.println("Contador " + permissaoCount);
+
+            System.out.println(currentPermissao.getTipoPermissao());
+
+            if (!currentDate.isBefore(currentPermissao.getDataInicio())
+                    && !currentDate.isAfter(currentPermissao.getDataFim())) {
+                dataRow.createCell(7).setCellValue(currentPermissao.getTipoPermissao().toString());
+                System.out.println("Entrou para colocar um registro na coluna de permissão do tipo "
+                        + currentPermissao.getTipoPermissao());
+            }
+
+            if (currentPermissao.getDataFim().equals(currentDate)) {
+                System.out.println("Entrou para somar para a segunda permissão");
+                if (listPermissoes.size() > (permissaoCount + 1)) {
+                    System.out.println("Entrou para somar o permissaoCount");
+                    permissaoCount++;
+                }
+            }
+
+
+            System.out.println("Contador 2" + permissaoCount);
 
             for (Horario horario : horarios) {
                 if (horario.getDiaSemana().equals(currentDate.getDayOfWeek())) {
-                    // Encontra o registro de ponto correspondente
+
                     for (RegistroPonto registro : registros) {
-                        
+
                         if (registro.getDataHora().toLocalDate().equals(currentDate)) {
 
                             if (registro.getTipoRegistro().toString().equals("INICIO")) {
@@ -239,6 +275,8 @@ public class ReportService {
         headerRow.createCell(3).setCellValue("FIM");
         headerRow.createCell(4).setCellValue("Hora Extra");
         headerRow.createCell(5).setCellValue("Hora Falta");
+        headerRow.createCell(6).setCellValue("Ausência");
+        headerRow.createCell(7).setCellValue("Permissão");
 
         // Definir largura específica para cada coluna (em unidades de 1/256 de largura
         // de caractere)
@@ -246,17 +284,19 @@ public class ReportService {
         sheet.setColumnWidth(1, 4000); // Data
         sheet.setColumnWidth(2, 3000); // INICIO
         sheet.setColumnWidth(3, 3000); // FIM
+        sheet.setColumnWidth(4, 4000);
         sheet.setColumnWidth(5, 4000);
         sheet.setColumnWidth(6, 4000);
+        sheet.setColumnWidth(7, 4000);
     }
 
     private void adicionarTotais(HSSFSheet sheet, int dataRowIndex, long totalHoraExtra, long totalHoraFalta) {
-        long hoursHoraExtra = totalHoraExtra / 60; 
+        long hoursHoraExtra = totalHoraExtra / 60;
         long minutesHoraExtra = totalHoraExtra % 60;
         String resultadoHoraExtra = String.format("%02d:%02d", hoursHoraExtra, minutesHoraExtra);
 
-        long hoursHoraFalta = totalHoraFalta / 60; 
-        long minutesHoraFalta = totalHoraFalta % 60; 
+        long hoursHoraFalta = totalHoraFalta / 60;
+        long minutesHoraFalta = totalHoraFalta % 60;
         String resultadoHoraFalta = String.format("%02d:%02d", hoursHoraFalta, minutesHoraFalta);
 
         // Adiciona a linha "Totais" ao final
