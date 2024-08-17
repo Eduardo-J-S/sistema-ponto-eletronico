@@ -3,6 +3,7 @@ package com.ifpe.sistema_ponto_eletronico.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ifpe.sistema_ponto_eletronico.convert.ModelMapperConvert;
@@ -13,6 +14,7 @@ import com.ifpe.sistema_ponto_eletronico.repository.PermissaoRepository;
 import com.ifpe.sistema_ponto_eletronico.service.exceptions.ObjectNotFoundException;
 import com.ifpe.sistema_ponto_eletronico.repository.FuncionarioRepository;
 
+@Service
 public class PermissaoService {
 
     @Autowired

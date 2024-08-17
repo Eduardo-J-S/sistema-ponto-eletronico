@@ -18,6 +18,7 @@ public class Permissao {
 
     private LocalDate dataFim;
 
+    @Enumerated(EnumType.STRING)
     private TipoPermissao tipoPermissao;
 
     @ManyToOne
