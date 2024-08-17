@@ -1,7 +1,6 @@
 package com.ifpe.sistema_ponto_eletronico.service;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
