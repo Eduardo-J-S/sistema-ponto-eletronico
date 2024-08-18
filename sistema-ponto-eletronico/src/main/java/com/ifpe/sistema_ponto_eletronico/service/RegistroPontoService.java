@@ -5,7 +5,7 @@ import com.ifpe.sistema_ponto_eletronico.convert.ModelMapperConvert;
 import com.ifpe.sistema_ponto_eletronico.dto.RegistroPontoDTO;
 import com.ifpe.sistema_ponto_eletronico.model.Funcionario;
 import com.ifpe.sistema_ponto_eletronico.model.RegistroPonto;
-import com.ifpe.sistema_ponto_eletronico.model.TipoRegistro;
+import com.ifpe.sistema_ponto_eletronico.model.enumerable.TipoRegistro;
 import com.ifpe.sistema_ponto_eletronico.repository.RegistroPontoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

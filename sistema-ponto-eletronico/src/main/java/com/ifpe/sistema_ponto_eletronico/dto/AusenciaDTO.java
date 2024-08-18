@@ -3,7 +3,7 @@ package com.ifpe.sistema_ponto_eletronico.dto;
 import java.time.LocalDate;
 
 import com.ifpe.sistema_ponto_eletronico.model.Funcionario;
-import com.ifpe.sistema_ponto_eletronico.model.TipoAusencia;
+import com.ifpe.sistema_ponto_eletronico.model.enumerable.TipoAusencia;
 
 import lombok.Getter;
 import lombok.Setter;
