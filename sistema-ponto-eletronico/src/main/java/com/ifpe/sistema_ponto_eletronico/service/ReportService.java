@@ -10,6 +10,8 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.ifpe.sistema_ponto_eletronico.model.Ausencia;
 import com.ifpe.sistema_ponto_eletronico.model.Funcionario;
 import com.ifpe.sistema_ponto_eletronico.model.Horario;
 import com.ifpe.sistema_ponto_eletronico.model.Permissao;
@@ -66,11 +68,16 @@ public class ReportService {
         horarios.forEach(horario -> System.out.println(horario + " Horarios"));
 
         Set<Permissao> permissoes = funcionario.getPermissoes();
-        List<Permissao> listPermissoes = new ArrayList<>(permissoes);
+        List<Permissao> listPermissoes = permissoes == null ? new ArrayList<>() : new ArrayList<>(permissoes);
+
+        Set<Ausencia> ausencias = funcionario.getAusencias();
+        List<Ausencia> listAusencias = ausencias == null ? new ArrayList<>() : new ArrayList<>(ausencias);
 
         // Ordena a lista de permissões por data de início (mais antiga primeiro)
         listPermissoes.sort((p1, p2) -> p1.getDataInicio().compareTo(p2.getDataInicio()));
 
+        // Ordena a lista de ausências por data de início (mais antiga primeiro)
+        listAusencias.sort((p1, p2) -> p1.getDataInicio().compareTo(p2.getDataInicio()));
 
         // Cria o workbook e a planilha
         HSSFWorkbook workbook = new HSSFWorkbook();
@@ -92,7 +99,10 @@ public class ReportService {
         long totalHoraFalta = 0;
 
         int permissaoCount = 0;
-        Permissao currentPermissao = listPermissoes.get(permissaoCount);
+        Permissao currentPermissao = listPermissoes.isEmpty() ? null : listPermissoes.get(permissaoCount);
+
+        int ausenciaCount = 0;
+        Ausencia currentAusencia = listAusencias.isEmpty() ? null : listAusencias.get(ausenciaCount);
         while (!currentDate.isAfter(endDate)) {
             // Formatar o dia da semana e o dia do mês
             String dayOfWeek = currentDate.format(dayOfWeekFormatter);
@@ -107,29 +117,43 @@ public class ReportService {
             long resultadoHoraExtra = 0;
             long resultadoHoraFalta = 0;
 
-            currentPermissao = listPermissoes.get(permissaoCount);
-
             System.out.println("Contador " + permissaoCount);
 
             System.out.println(currentPermissao.getTipoPermissao());
 
-            if (!currentDate.isBefore(currentPermissao.getDataInicio())
+            // Adicionando permissoes no relatorio
+            if (currentPermissao != null && !currentDate.isBefore(currentPermissao.getDataInicio())
                     && !currentDate.isAfter(currentPermissao.getDataFim())) {
                 dataRow.createCell(7).setCellValue(currentPermissao.getTipoPermissao().toString());
                 System.out.println("Entrou para colocar um registro na coluna de permissão do tipo "
                         + currentPermissao.getTipoPermissao());
             }
 
-            if (currentPermissao.getDataFim().equals(currentDate)) {
+            if (currentPermissao != null && currentPermissao.getDataFim().equals(currentDate)) {
                 System.out.println("Entrou para somar para a segunda permissão");
                 if (listPermissoes.size() > (permissaoCount + 1)) {
                     System.out.println("Entrou para somar o permissaoCount");
                     permissaoCount++;
+                    currentPermissao = listPermissoes.get(permissaoCount);
+                } else {
+                    currentPermissao = null;
                 }
             }
 
+            // Adicionando ausencias no relatorio
+            if (currentAusencia != null && !currentDate.isBefore(currentAusencia.getDataInicio())
+                    && !currentDate.isAfter(currentAusencia.getDataFim())) {
+                dataRow.createCell(6).setCellValue(currentAusencia.getTipoAusencia().toString());
+            }
 
-            System.out.println("Contador 2" + permissaoCount);
+            if (currentAusencia != null && currentAusencia.getDataFim().equals(currentDate)) {
+                if (listAusencias.size() > (ausenciaCount + 1)) {
+                    ausenciaCount++;
+                    currentAusencia = listAusencias.get(ausenciaCount);
+                } else {
+                    currentAusencia = null;
+                }
+            }
 
             for (Horario horario : horarios) {
                 if (horario.getDiaSemana().equals(currentDate.getDayOfWeek())) {
