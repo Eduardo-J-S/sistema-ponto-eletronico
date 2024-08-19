@@ -1,13 +1,8 @@
 package com.ifpe.sistema_ponto_eletronico.dto;
 
 import java.time.LocalDate;
-import java.util.Set;
 
-import com.ifpe.sistema_ponto_eletronico.model.Ausencia;
 import com.ifpe.sistema_ponto_eletronico.model.Empresa;
-import com.ifpe.sistema_ponto_eletronico.model.Horario;
-import com.ifpe.sistema_ponto_eletronico.model.Permissao;
-import com.ifpe.sistema_ponto_eletronico.model.RegistroPonto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -26,9 +21,5 @@ public class FuncionarioDTO {
     private String status;
     private String senha;
     private Empresa empresa;
-    private Set<RegistroPonto> registrosPonto;
-    private Set<Permissao> permissoes;
-    private Set<Ausencia> ausencias;
-    private Set<Horario> horarios;
 
 }

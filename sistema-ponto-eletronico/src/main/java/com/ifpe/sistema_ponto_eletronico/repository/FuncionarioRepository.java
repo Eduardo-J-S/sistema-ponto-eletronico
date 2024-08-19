@@ -18,4 +18,6 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> 
     List<Funcionario> findByEmpresa(Empresa empresa);
 
     Funcionario findByCpfAndStatus(String cpf, String status);
+
+    Optional<Funcionario> findByMatricula(String matricula);
 }

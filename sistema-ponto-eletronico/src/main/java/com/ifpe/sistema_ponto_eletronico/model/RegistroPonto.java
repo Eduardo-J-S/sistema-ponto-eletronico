@@ -7,6 +7,8 @@ import lombok.Setter;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
+import com.ifpe.sistema_ponto_eletronico.model.enumerable.TipoRegistro;
+
 @Entity
 @Getter
 @Setter

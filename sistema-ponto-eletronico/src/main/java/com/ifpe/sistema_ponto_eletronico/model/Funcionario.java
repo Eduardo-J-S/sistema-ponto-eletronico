@@ -4,19 +4,32 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ifpe.sistema_ponto_eletronico.model.enumerable.UserType;
 
 @Entity
 @Getter
 @Setter
-public class Funcionario {
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = "id")
+public class Funcionario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +45,7 @@ public class Funcionario {
     private String email;
 
     @Column(unique = true, nullable = false)
-    @NotNull(message = "A matricula não pode ser nula")
+    @NotNull(message = "Matrícula é obrigatória")
     private String matricula;
 
     private LocalDate dataNascimento;
@@ -73,6 +86,26 @@ public class Funcionario {
     @JsonIgnore // Para evitar referência circular
     @OneToMany(mappedBy = "funcionario")
     private Set<Permissao> permissoes;
+
+    @Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private UserType role;
+
+    @Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		if(this.role == UserType.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+	}
+
+    @Override
+	public String getUsername() {
+		return this.matricula;
+	}
+
+	@Override
+    public String getPassword() {
+        return this.senha;
+    }
 
 }
 
