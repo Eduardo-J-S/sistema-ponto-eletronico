@@ -89,6 +89,7 @@ public class FuncionarioService {
         funcionario.setSenha(funcionarioDTO.getSenha());
         funcionario.setEmpresa(funcionario.getEmpresa());
         funcionario.setRegistrosPonto(funcionario.getRegistrosPonto());
+        funcionario.setRole(funcionarioDTO.getRole());
         
         return mapperConvert.convertObject(funcionarioRepository.save(funcionario), FuncionarioDTO.class);
     }

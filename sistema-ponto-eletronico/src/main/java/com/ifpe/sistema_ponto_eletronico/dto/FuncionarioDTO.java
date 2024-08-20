@@ -3,6 +3,7 @@ package com.ifpe.sistema_ponto_eletronico.dto;
 import java.time.LocalDate;
 
 import com.ifpe.sistema_ponto_eletronico.model.Empresa;
+import com.ifpe.sistema_ponto_eletronico.model.enumerable.UserType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,5 +22,6 @@ public class FuncionarioDTO {
     private String status;
     private String senha;
     private Empresa empresa;
+    private UserType role;
 
 }
