@@ -1,25 +1,28 @@
-import React from 'react';
-import './styles.css';
+import React from "react";
+import "./styles.css";
+import { Link } from "react-router-dom";
 
-const Home = () => {
-
-    return (
-        <div className="login-container">
-        <div className="login-form">
-          <div className="logo">
-            <h1>SuaLogo<span>#</span></h1>
-          </div>
-          <div className="input-container">
-            <input type="text" placeholder="Usuário" />
-            <input type="password" placeholder="Senha" />
-          </div>
-          <button>ENTRAR</button>
+const Login = () => {
+  return (
+    <div className="login-container-login">
+      <div className="login-form-login">
+        <div className="logo-login">
+          <h1>
+            Don Don <span>#</span>
+          </h1>
         </div>
-        <div className="login-image">
-          {/* A imagem do laptop vai aqui */}
+        <div className="input-container-login">
+          <input type="text" placeholder="Matrícula" />
+          <input type="password" placeholder="Senha" />
         </div>
+        <nav className="register-container-login">
+          <p>Não possui uma conta? <Link to="/register" className="register-link-login">Registrar empresa</Link></p>
+        </nav>
+        <button className="button-login">ENTRAR</button>
       </div>
-    );
-}
+      <div className="login-image-login"></div>
+    </div>
+  );
+};
 
-export default Home;
+export default Login;

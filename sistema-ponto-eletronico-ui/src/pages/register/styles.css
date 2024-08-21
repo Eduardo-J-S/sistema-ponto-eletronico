@@ -6,8 +6,8 @@ body {
   height: 100%;
 }
 
-/* Container principal da página de login */
-.login-container-login {
+/* Container principal da página de registro */
+.login-container-register {
   display: flex;
   height: 100vh;
   background-color: #f0f0f0;
@@ -15,8 +15,8 @@ body {
   padding: 0;
 }
 
-/* Formulário de login */
-.login-form-login {
+/* Formulário de registro */
+.login-form-register {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -29,23 +29,32 @@ body {
 }
 
 /* Estilo da logo */
-.logo-login h1 {
+.logo-register h1 {
   font-size: 36px;
   color: #333;
 }
 
-.logo-login h1 span {
+.logo-register h1 span {
   color: #f0c30f; /* Cor do # na logo */
 }
 
-/* Container para os inputs */
-.input-container-login {
+/* Container para os inputs em duas colunas */
+.input-container-register {
+  display: flex;
+  gap: 30px; /* Espaço entre as colunas */
   width: 100%;
-  max-width: 300px;
+  max-width: 600px;
   margin: 20px 0;
 }
 
-.input-container-login input {
+/* Configurações das colunas */
+.column-register {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.column-register input {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
@@ -54,8 +63,16 @@ body {
   font-size: 16px;
 }
 
-/* Estilo do botão de login */
-.button-login {
+/* Container do botão Registrar */
+.button-container-register {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
+  
+/* Estilo do botão Registrar */
+button[type="submit"].button-register {
   padding: 10px 20px;
   background-color: #333;
   color: #fff;
@@ -63,38 +80,36 @@ body {
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
-  width: calc(100% + 20px); /* Aumenta o tamanho do botão */
-  max-width: 320px; /* Define um limite máximo de largura */
-  margin-left: +15px;
+  max-width: 200px; /* Define um limite máximo de largura */
 }
 
-/* Estilo do contêiner de registro */
-.register-container-login {
+/* Estilo do contêiner de login */
+.register-container-register {
   text-align: center;
-  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 /* Estilo do parágrafo */
-.register-container-login p {
+.register-container-register p {
   font-size: 14px;
   color: #555;
   margin: 0;
 }
 
 /* Estilo do link */
-.register-link-login {
+.register-link-register {
   color: #007bff; /* Cor azul padrão para links */
   text-decoration: none;
   font-weight: bold;
 }
 
 /* Adiciona um efeito de sublinhado ao passar o mouse */
-.register-link-login:hover {
+.register-link-register:hover {
   text-decoration: underline;
 }
 
-/* Imagem de fundo da página de login */
-.login-image-login {
+/* Imagem de fundo da página de registro */
+.login-image-register {
   flex: 1;
   background-image: url(../../images/page1_img2.jpg);
   background-size: cover;

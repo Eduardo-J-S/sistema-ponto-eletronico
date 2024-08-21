@@ -2,7 +2,8 @@ import React from "react";
 import { BrowserRouter, Routes, Link, Route } from "react-router-dom";
 
 import ContextProvider from "./contexts";
-import Home from "./pages/login";
+import Login from "./pages/login";
+import Register from "./pages/register";
 
 function App() {
   return (
@@ -11,8 +12,8 @@ function App() {
         <BrowserRouter>
           <ContextProvider>
           <Routes>
-            <Route path='/login' element={ <Home />}/>
-            <Route path='/products'/>
+            <Route path='/' element={ <Login />}/>
+            <Route path='/register' element={ <Register />}/>
             <Route path='/about' />
           </Routes>
           </ContextProvider>
