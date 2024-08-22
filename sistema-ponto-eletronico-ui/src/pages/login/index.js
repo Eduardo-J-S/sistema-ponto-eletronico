@@ -12,13 +12,13 @@ const Login = () => {
           </h1>
         </div>
         <div className="input-container-login">
-          <input type="text" placeholder="Matrícula" />
-          <input type="password" placeholder="Senha" />
+          <input type="text" placeholder="Matrícula" required/>
+          <input type="password" placeholder="Senha" required />
         </div>
         <nav className="register-container-login">
           <p>Não possui uma conta? <Link to="/register" className="register-link-login">Registrar empresa</Link></p>
         </nav>
-        <button className="button-login">ENTRAR</button>
+        <button type="submit" className="button-login">ENTRAR</button>
       </div>
       <div className="login-image-login"></div>
     </div>

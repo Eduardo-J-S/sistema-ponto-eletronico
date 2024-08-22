@@ -1,0 +1,111 @@
+.app-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+/* Estilo do Drawer */
+.drawer {
+  width: 250px;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  left: -250px;
+  height: 100%;
+  transition: left 0.3s ease;
+  z-index: 1000;
+}
+
+.drawer.open {
+  left: 0;
+}
+
+.drawer-nav {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+
+.drawer-link {
+  color: white;
+  text-decoration: none;
+  padding: 15px 20px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.drawer-link:hover {
+  background-color: #444;
+}
+
+.drawer-link svg {
+  margin-right: 10px;
+}
+
+/* Estilo da parte principal da página */
+.content {
+  flex: 1;
+  padding: 20px;
+  margin-left: 250px;
+  transition: margin-left 0.3s ease;
+}
+
+.header {
+  text-align: center;
+}
+
+.menu-icon {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #555;
+}
+
+.header h1 {
+  font-size: 48px;
+  margin: 10px 0;
+  color: #333;
+}
+
+.botoes-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.botao {
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 150px;
+  margin: 0 10px;
+}
+
+.botao-entrada {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.botao-saida {
+  background-color: #F44336;
+  color: white;
+}
+
+.botao-entrada:hover {
+  background-color: #45a049;
+}
+
+.botao-saida:hover {
+  background-color: #d32f2f;
+}
