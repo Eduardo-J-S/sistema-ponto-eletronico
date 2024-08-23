@@ -29,7 +29,7 @@ const Drawer = ({ isOpen, onClose }) => {
         <Link to="/espelho" className="drawer-link" onClick={onClose}>
           <FaClipboard /> Espelho de Ponto
         </Link>
-        <Link to="/alterar-senha" className="drawer-link" onClick={onClose}>
+        <Link to="/alterar" className="drawer-link" onClick={onClose}>
           <FaLock /> Alterar Senha
         </Link>
         <Link to="/ajuda" className="drawer-link" onClick={onClose}>
