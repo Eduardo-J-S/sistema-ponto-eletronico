@@ -1,0 +1,81 @@
+/* Container principal da página de Alterar Senha */
+.alterar-senha-page {
+    display: flex;
+    height: 100vh;
+  }
+  
+  /* Conteúdo principal da página de Alterar Senha */
+  .alterar-senha-page .content {
+    margin-left: 250px;
+    padding: 20px;
+    flex: 1;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    align-items: center;
+  }
+  
+  /* Estilo do cabeçalho da página de Alterar Senha */
+  .alterar-senha-page .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Título da página de Alterar Senha */
+  .alterar-senha-page h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  /* Grupo de formulário da página de Alterar Senha */
+  .alterar-senha-page .form-group {
+    margin-bottom: 15px;
+  }
+  
+  /* Rótulo dos campos do formulário */
+  .alterar-senha-page label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  /* Estilo dos inputs */
+  .alterar-senha-page input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  /* Estilo do botão de envio do formulário */
+  .alterar-senha-page button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    width: 106%;
+  }
+  
+  /* Efeito de hover do botão */
+  .alterar-senha-page button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilo do botão focado */
+  .alterar-senha-page button:focus {
+    outline: none;
+  }
+  
+  /* Ícone do menu */
+  .alterar-senha-page .menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
