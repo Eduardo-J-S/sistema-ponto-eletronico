@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./styles.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { PerfilContext } from "../../contexts";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,9 @@ const Register = () => {
     cpfAdmin: "",
     emailAdmin: "",
   });
+  const navigate = useNavigate();
+  const { register } = useContext(PerfilContext);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,10 +26,22 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
-    // Aqui você pode adicionar a lógica para enviar os dados para o backend.
+    const result = await register(
+      formData.nomeEmpresa, 
+      formData.cnpj, 
+      formData.telefone, 
+      formData.nomeAdmin,
+      formData.matriculaAdmin, 
+      formData.senhaAdmin, 
+      formData.cpfAdmin, 
+      formData.emailAdmin
+    );
+    if (result.success) {
+      navigate("/registro");
+    }
   };
 
   return (
