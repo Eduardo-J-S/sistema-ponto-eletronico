@@ -1,12 +1,14 @@
-import React, { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaHome, FaClipboard, FaLock, FaQuestionCircle, FaSignOutAlt } from 'react-icons/fa';
 import './styles.css';
+import { PerfilContext } from '../contexts';
 
 const Drawer = ({ isOpen, onClose }) => {
   const drawerRef = useRef(null);
+  const { logout } = useContext(PerfilContext); 
+  const navigate = useNavigate(); 
 
-  // Fechar o drawer ao clicar fora dele
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (drawerRef.current && !drawerRef.current.contains(event.target)) {
@@ -19,6 +21,12 @@ const Drawer = ({ isOpen, onClose }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [onClose]);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/'); 
+    onClose(); 
+  };
 
   return (
     <div ref={drawerRef} className={`drawer ${isOpen ? 'open' : ''}`}>
@@ -35,9 +43,9 @@ const Drawer = ({ isOpen, onClose }) => {
         <Link to="/ajuda" className="drawer-link" onClick={onClose}>
           <FaQuestionCircle /> Ajuda
         </Link>
-        <Link to="/sair" className="drawer-link" onClick={onClose}>
+        <button className="drawer-link" onClick={handleLogout}>
           <FaSignOutAlt /> Sair
-        </Link>
+        </button>
       </nav>
     </div>
   );

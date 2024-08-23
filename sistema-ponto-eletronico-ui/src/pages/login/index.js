@@ -1,8 +1,37 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import "./styles.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { PerfilContext } from "../../contexts";
 
 const Login = () => {
+  const { login } = useContext(PerfilContext);
+  const [matricula, setMatricula] = useState("");
+  const [senha, setSenha] = useState("");
+  const [matriculaValid, setMatriculavalid] = useState(true);
+  const [senhaValid, setSenhaValid] = useState(true);
+  const navigate = useNavigate();
+
+  async function handleLogin() {
+    if (matricula.trim() === "") {
+      setMatriculavalid(false);
+      return;
+    } else {
+      setSenhaValid(true);
+    }
+
+    if (senha.trim() === "") {
+      setSenhaValid(false);
+      return;
+    } else {
+      setSenhaValid(true);
+    }
+
+    const result = await login(matricula, senha);
+    if (result.success) {
+      navigate("/registro");
+    }
+  }
+
   return (
     <div className="login-container-login">
       <div className="login-form-login">
@@ -12,13 +41,34 @@ const Login = () => {
           </h1>
         </div>
         <div className="input-container-login">
-          <input type="text" placeholder="Matrícula" required/>
-          <input type="password" placeholder="Senha" required />
+          <input
+            type="text"
+            placeholder="Matrícula"
+            required
+            className={`fieldMatricula ${matriculaValid ? "valid" : "invalid"}`}
+            value={matricula}
+            onChange={(e) => setMatricula(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Senha"
+            required
+            className={`fieldSenha ${senhaValid ? "valid" : "invalid"}`}
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+          />
         </div>
         <nav className="register-container-login">
-          <p>Não possui uma conta? <Link to="/register" className="register-link-login">Registrar empresa</Link></p>
+          <p>
+            Não possui uma conta?{" "}
+            <Link to="/register" className="register-link-login">
+              Registrar empresa
+            </Link>
+          </p>
         </nav>
-        <button type="submit" className="button-login">ENTRAR</button>
+        <button type="submit" className="button-login" onClick={handleLogin}>
+          ENTRAR
+        </button>
       </div>
       <div className="login-image-login"></div>
     </div>

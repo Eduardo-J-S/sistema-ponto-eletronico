@@ -100,3 +100,13 @@ body {
   background-size: cover;
   background-position: center;
 }
+
+.fieldMatricula.invalid,
+.fieldSenha.invalid {
+    border-color: #ff6347; 
+}
+
+.fieldMatricula.valid,
+.fieldSenha.valid {
+    border-color: #4caf50;
+}

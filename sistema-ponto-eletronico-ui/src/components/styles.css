@@ -26,7 +26,14 @@
     font-size: 18px;
     display: flex;
     align-items: center;
+    background-color: transparent; /* Background color for links */
+    border: none; /* Remove border for button */
+    cursor: pointer; /* Change cursor to pointer for button */
   }
+
+  .drawer-link:hover {
+    background-color: #444; /* Hover color for both links and button */
+}
   
   .drawer-link:hover {
     background-color: #444;
@@ -36,3 +43,8 @@
     margin-right: 10px;
   }
   
+  .drawer-link.button {
+    background-color: transparent; /* Ensure button background is transparent */
+    border: none; /* Remove border for button */
+    cursor: pointer; /* Ensure cursor is pointer for button */
+}
