@@ -32,6 +32,19 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        
+                        // Permitir acesso somente para ADMIN
+                        .requestMatchers("/api/empresa/**").hasRole("ADMIN")
+                        .requestMatchers("/api/funcionario/**").hasRole("ADMIN")
+
+                        // Permitir acesso somente para USER e ADMIN
+                        .requestMatchers("/api/ausencia/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/api/horario/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/api/permissao/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/api/registroponto/**").hasAnyRole("USER", "ADMIN")
+
+                        // Permitir acesso a relatórios para ADMIN
+                        .requestMatchers("/excel").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
