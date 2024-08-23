@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { FaHome, FaClipboard, FaLock, FaQuestionCircle, FaSignOutAlt } from 'react-icons/fa';
-import './styles.css'; // Adicione o CSS específico para o Drawer aqui
+import './styles.css';
 
 const Drawer = ({ isOpen, onClose }) => {
+  const drawerRef = useRef(null);
+
   // Fechar o drawer ao clicar fora dele
   useEffect(() => {
     const handleClickOutside = (event) => {
-      const drawer = document.querySelector('.drawer');
-      const menuIcon = document.querySelector('.menu-icon');
-      if (drawer && !drawer.contains(event.target) && !menuIcon.contains(event.target)) {
+      if (drawerRef.current && !drawerRef.current.contains(event.target)) {
         onClose();
       }
     };
@@ -21,7 +21,7 @@ const Drawer = ({ isOpen, onClose }) => {
   }, [onClose]);
 
   return (
-    <div className={`drawer ${isOpen ? 'open' : ''}`}>
+    <div ref={drawerRef} className={`drawer ${isOpen ? 'open' : ''}`}>
       <nav className="drawer-nav">
         <Link to="/registro" className="drawer-link" onClick={onClose}>
           <FaHome /> Início

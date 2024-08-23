@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { FaBars } from 'react-icons/fa';
 import './styles.css';
@@ -21,22 +21,6 @@ const EspelhoDePonto = () => {
   const closeDrawer = () => {
     setIsDrawerOpen(false);
   };
-
-  // Fechar o drawer ao clicar fora dele
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      const drawer = document.querySelector('.drawer');
-      const menuIcon = document.querySelector('.menu-icon');
-      if (drawer && !drawer.contains(event.target) && !menuIcon.contains(event.target)) {
-        closeDrawer();
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

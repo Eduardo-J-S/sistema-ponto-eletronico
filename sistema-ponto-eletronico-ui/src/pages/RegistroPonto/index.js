@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaBars } from 'react-icons/fa';
 import Drawer from '../../components/Drawer';
 import './styles.css';
@@ -8,16 +8,13 @@ const RegistroPonto = () => {
   const [dataAtual, setDataAtual] = useState(new Date().toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const drawerRef = useRef(null);
-  const menuIconRef = useRef(null);
-
   // Atualiza a hora atual a cada segundo
   useEffect(() => {
     const interval = setInterval(() => {
       setHoraAtual(new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }));
     }, 1000);
 
-    return () => clearInterval(interval); // Limpa o intervalo ao desmontar o componente
+    return () => clearInterval(interval);
   }, []);
 
   const handleEntrada = () => {
@@ -36,33 +33,14 @@ const RegistroPonto = () => {
     setIsDrawerOpen(false);
   };
 
-  // Fechar o drawer ao clicar fora dele
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        drawerRef.current && !drawerRef.current.contains(event.target) &&
-        menuIconRef.current && !menuIconRef.current.contains(event.target)
-      ) {
-        closeDrawer();
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
   return (
     <div className="registro-de-ponto-page">
-      <Drawer isOpen={isDrawerOpen} onClose={closeDrawer} ref={drawerRef} />
+      <Drawer isOpen={isDrawerOpen} onClose={closeDrawer} />
       <div className="content">
-        {/* Renderiza o ícone do menu apenas se o Drawer estiver fechado */}
         {!isDrawerOpen && (
           <FaBars
             className="menu-icon"
             onClick={toggleDrawer}
-            ref={menuIconRef}
           />
         )}
         <header className="header">
