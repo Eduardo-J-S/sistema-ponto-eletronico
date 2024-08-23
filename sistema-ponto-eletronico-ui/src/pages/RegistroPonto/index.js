@@ -1,12 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { FaBars, FaHome, FaClipboard, FaLock, FaQuestionCircle, FaSignOutAlt } from 'react-icons/fa';
+import React, { useState, useEffect, useRef } from 'react';
+import { FaBars } from 'react-icons/fa';
+import Drawer from '../../components/Drawer';
 import './styles.css';
 
 const RegistroPonto = () => {
   const [horaAtual, setHoraAtual] = useState(new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }));
   const [dataAtual, setDataAtual] = useState(new Date().toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const drawerRef = useRef(null);
+  const menuIconRef = useRef(null);
+
+  // Atualiza a hora atual a cada segundo
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHoraAtual(new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }));
+    }, 1000);
+
+    return () => clearInterval(interval); // Limpa o intervalo ao desmontar o componente
+  }, []);
 
   const handleEntrada = () => {
     alert('Entrada registrada às ' + horaAtual);
@@ -15,10 +27,6 @@ const RegistroPonto = () => {
   const handleSaida = () => {
     alert('Saída registrada às ' + horaAtual);
   };
-
-  setInterval(() => {
-    setHoraAtual(new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }));
-  }, 1000);
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -31,9 +39,10 @@ const RegistroPonto = () => {
   // Fechar o drawer ao clicar fora dele
   useEffect(() => {
     const handleClickOutside = (event) => {
-      const drawer = document.querySelector('.drawer');
-      const menuIcon = document.querySelector('.menu-icon');
-      if (drawer && !drawer.contains(event.target) && !menuIcon.contains(event.target)) {
+      if (
+        drawerRef.current && !drawerRef.current.contains(event.target) &&
+        menuIconRef.current && !menuIconRef.current.contains(event.target)
+      ) {
         closeDrawer();
       }
     };
@@ -45,29 +54,18 @@ const RegistroPonto = () => {
   }, []);
 
   return (
-    <div className="app-container">
-      <div className={`drawer ${isDrawerOpen ? 'open' : ''}`}>
-        <nav className="drawer-nav">
-          <Link to="/registro" className="drawer-link" onClick={closeDrawer}>
-            <FaHome /> Início
-          </Link>
-          <Link to="/espelho" className="drawer-link" onClick={closeDrawer}>
-            <FaClipboard /> Espelho de Ponto
-          </Link>
-          <Link to="/alterar-senha" className="drawer-link" onClick={closeDrawer}>
-            <FaLock /> Alterar Senha
-          </Link>
-          <Link to="/ajuda" className="drawer-link" onClick={closeDrawer}>
-            <FaQuestionCircle /> Ajuda
-          </Link>
-          <Link to="/sair" className="drawer-link" onClick={closeDrawer}>
-            <FaSignOutAlt /> Sair
-          </Link>
-        </nav>
-      </div>
+    <div className="registro-de-ponto-page">
+      <Drawer isOpen={isDrawerOpen} onClose={closeDrawer} ref={drawerRef} />
       <div className="content">
+        {/* Renderiza o ícone do menu apenas se o Drawer estiver fechado */}
+        {!isDrawerOpen && (
+          <FaBars
+            className="menu-icon"
+            onClick={toggleDrawer}
+            ref={menuIconRef}
+          />
+        )}
         <header className="header">
-          <FaBars className="menu-icon" onClick={toggleDrawer} />
           <h2>{dataAtual}</h2>
           <h1>{horaAtual}</h1>
         </header>

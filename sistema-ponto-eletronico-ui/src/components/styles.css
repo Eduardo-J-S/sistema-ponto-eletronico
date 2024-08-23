@@ -1,0 +1,38 @@
+.drawer {
+    width: 250px;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    height: 100%;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+  
+  .drawer.open {
+    left: 0;
+  }
+  
+  .drawer-nav {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+  }
+  
+  .drawer-link {
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .drawer-link:hover {
+    background-color: #444;
+  }
+  
+  .drawer-link svg {
+    margin-right: 10px;
+  }
+  

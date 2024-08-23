@@ -1,61 +1,25 @@
-.app-container {
+/* src/pages/RegistroDePonto.css */
+
+.registro-de-ponto-page {
   display: flex;
   width: 100%;
   height: 100vh;
+  background-color: #f5f5f5;
+  overflow: hidden; /* Remove rolagem excessiva */
 }
 
-/* Estilo do Drawer */
-.drawer {
-  width: 250px;
-  background-color: #333;
-  position: fixed;
-  top: 0;
-  left: -250px;
-  height: 100%;
-  transition: left 0.3s ease;
-  z-index: 1000;
-}
-
-.drawer.open {
-  left: 0;
-}
-
-.drawer-nav {
-  display: flex;
-  flex-direction: column;
-  padding-top: 20px;
-}
-
-.drawer-link {
-  color: white;
-  text-decoration: none;
-  padding: 15px 20px;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-}
-
-.drawer-link:hover {
-  background-color: #444;
-}
-
-.drawer-link svg {
-  margin-right: 10px;
-}
-
-/* Estilo da parte principal da página */
-.content {
+.registro-de-ponto-page .content {
   flex: 1;
   padding: 20px;
-  margin-left: 250px;
+  margin-left: 500px; /* Ajusta o espaço da esquerda para mover os componentes mais para a esquerda */
   transition: margin-left 0.3s ease;
 }
 
-.header {
+.registro-de-ponto-page .header {
   text-align: center;
 }
 
-.menu-icon {
+.registro-de-ponto-page .menu-icon {
   position: absolute;
   top: 20px;
   left: 20px;
@@ -64,48 +28,43 @@
   color: #333;
 }
 
-.header h2 {
+.registro-de-ponto-page .header h2 {
   margin: 0;
   font-size: 24px;
   color: #555;
 }
 
-.header h1 {
-  font-size: 48px;
-  margin: 10px 0;
-  color: #333;
-}
-
-.botoes-container {
+.registro-de-ponto-page .botoes-container {
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
 
-.botao {
+.registro-de-ponto-page .botao {
   padding: 15px 30px;
   font-size: 18px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  width: 150px;
+  width: 100%; /* Ajusta o botão para ocupar 100% da largura disponível */
+  max-width: 150px; /* Define uma largura máxima para o botão */
   margin: 0 10px;
 }
 
-.botao-entrada {
+.registro-de-ponto-page .botao-entrada {
   background-color: #4CAF50;
   color: white;
 }
 
-.botao-saida {
+.registro-de-ponto-page .botao-saida {
   background-color: #F44336;
   color: white;
 }
 
-.botao-entrada:hover {
+.registro-de-ponto-page .botao-entrada:hover {
   background-color: #45a049;
 }
 
-.botao-saida:hover {
+.registro-de-ponto-page .botao-saida:hover {
   background-color: #d32f2f;
 }

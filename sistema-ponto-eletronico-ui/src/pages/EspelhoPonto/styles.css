@@ -1,67 +1,134 @@
-.espelho-de-ponto-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .form-container {
-    display: grid;
-    gap: 15px;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    margin-bottom: 20px;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  input, select {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  button {
-    grid-column: span 2;
-    padding: 10px 20px;
-    background-color: #333;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #555;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  th, td {
-    padding: 10px;
-    border: 1px solid #ccc;
-    text-align: center;
-  }
-  
-  th {
-    background-color: #f0f0f0;
-  }
-  
+/* src/pages/styles.css */
+
+/* Contêiner principal específico para a tela de EspelhoDePonto */
+.espelho-de-ponto-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Faz o contêiner ocupar a altura completa da tela */
+  padding: 0; /* Remove o padding para não adicionar espaço extra */
+  background-color: #f5f5f5;
+  overflow: hidden; /* Remove a rolagem excessiva */
+  position: relative;
+}
+
+/* Estilo do Drawer */
+.drawer {
+  width: 250px;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  left: -250px; /* Inicialmente fora da tela */
+  height: 100%;
+  transition: left 0.3s ease;
+  z-index: 1000; /* Garante que o Drawer fique acima do conteúdo */
+}
+
+.drawer.open {
+  left: 0; /* Mostra o Drawer quando aberto */
+}
+
+/* Estilo do ícone do menu */
+.menu-icon {
+  position: fixed; /* Fica fixo na tela */
+  top: 20px; /* Ajusta a posição vertical */
+  left: 20px; /* Ajusta a posição horizontal */
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+  z-index: 1100; /* Garante que o ícone fique acima do Drawer */
+}
+
+/* Estilo da parte principal da página */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alinha o conteúdo à esquerda */
+  width: 100%;
+  max-width: 800px; /* Ajusta a largura máxima */
+  padding: 20px;
+  margin-left: 350px; /* Ajusta a margem para dar espaço ao Drawer */
+  transition: margin-left 0.3s ease; /* Transição suave quando o Drawer abre/fecha */
+}
+
+/* Contêiner do formulário específico para a tela de EspelhoDePonto */
+.espelho-de-ponto-page .espelho-de-ponto-container {
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  box-sizing: border-box;
+  max-width: 700px; /* Define uma largura máxima um pouco menor */
+}
+
+/* Contêiner do formulário específico para a tela de EspelhoDePonto */
+.espelho-de-ponto-page .form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Grupos de formulário específicos para a tela de EspelhoDePonto */
+.espelho-de-ponto-page .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.espelho-de-ponto-page label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.espelho-de-ponto-page input, 
+.espelho-de-ponto-page select {
+  padding: 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+/* Estilo do botão específico para a tela de EspelhoDePonto */
+.espelho-de-ponto-page .botao-buscar {
+  padding: 12px 25px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+
+}
+
+.espelho-de-ponto-page .botao-buscar:hover {
+  background-color: #555;
+}
+
+/* Tabela de dados específica para a tela de EspelhoDePonto */
+.espelho-de-ponto-page table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  overflow-x: auto; /* Adiciona rolagem horizontal se necessário */
+}
+
+.espelho-de-ponto-page th, 
+.espelho-de-ponto-page td {
+  padding: 12px;
+  border: 1px solid #ccc;
+  text-align: center;
+  font-size: 16px;
+}
+
+.espelho-de-ponto-page th {
+  background-color: #f0f0f0;
+}
+
+/* Estilo para o título específico para a tela de EspelhoDePonto */
+.espelho-de-ponto-page h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
