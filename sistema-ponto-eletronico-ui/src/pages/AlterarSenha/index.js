@@ -30,6 +30,7 @@ const AlterarSenha = () => {
 
   return (
     <div className="alterar-senha-page">
+      <div className="drawer-container">
       <Drawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
       <div className="content">
       {!isDrawerOpen && (
@@ -82,6 +83,7 @@ const AlterarSenha = () => {
 
           <button type="submit" className="botao-alterar-senha">Alterar Senha</button>
         </form>
+      </div>
       </div>
     </div>
   );

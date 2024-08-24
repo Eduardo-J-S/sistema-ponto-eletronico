@@ -1,0 +1,84 @@
+.justificativaContainer {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+.justificativaTitle {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.justificativaSearchForm {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.justificativaSearchFormInput {
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 60%;
+}
+
+.justificativaSearchFormButton {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.justificativaSearchFormButton:hover {
+    background-color: #0056b3;
+}
+
+.justificativaFuncionarioDetails {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.justificativaFuncionarioDetailsTitle {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.justificativaActionForm {
+    margin-top: 20px;
+}
+
+.justificativaActionFormRadioGroup {
+    margin-bottom: 20px;
+}
+
+.justificativaActionFormRadioGroupLabel {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.justificativaActionFormInput {
+    display: block;
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.justificativaActionFormButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #28a745;
+    color: #fff;
+    cursor: pointer;
+}
+
+.justificativaActionFormButton:hover {
+    background-color: #218838;
+}

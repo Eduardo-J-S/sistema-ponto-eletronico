@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useContext, useState } from 'react';
 import { FaBars } from 'react-icons/fa';
 import './styles.css';
 import Drawer from '../../components/Drawer';
+import { PerfilContext } from '../../contexts';
 
 const EspelhoDePonto = () => {
   const [cpf, setCpf] = useState('');
@@ -13,6 +13,8 @@ const EspelhoDePonto = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const { espelhoDePonto, user } = useContext(PerfilContext)
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -28,10 +30,8 @@ const EspelhoDePonto = () => {
     setError(null);
 
     try {
-      const response = await axios.get(
-        `http://localhost:8083/excel?cpf=${cpf}&dataInicio=${dataInicio}&dataFim=${dataFim}&status=${status}`
-      );
-      setDadosPonto(response.data);
+      const response = await espelhoDePonto(user.cpf, dataInicio, dataFim, user.status);
+      //setDadosPonto(response.data);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -48,6 +48,7 @@ const EspelhoDePonto = () => {
 
   return (
    <div className="espelho-de-ponto-page">
+    <div className="drawer-container">
   <Drawer isOpen={isDrawerOpen} onClose={closeDrawer} />
   <div className="content">
     {/* Renderiza o ícone do menu apenas se o Drawer estiver fechado */}
@@ -81,7 +82,7 @@ const EspelhoDePonto = () => {
             required
           />
         </div>
-        <button type="submit" className="botao-buscar">Buscar</button>
+        <button type="submit" className="botao-buscar">Download</button>
       </form>
 
       {loading && <p>Carregando...</p>}
@@ -112,6 +113,7 @@ const EspelhoDePonto = () => {
         </table>
       )}
     </div>
+  </div>
   </div>
 </div>
   );

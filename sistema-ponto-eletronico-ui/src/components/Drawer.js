@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaHome, FaClipboard, FaLock, FaQuestionCircle, FaSignOutAlt } from 'react-icons/fa';
+import { FaHome, FaClipboard, FaLock, FaQuestionCircle, FaSignOutAlt, FaUserPlus, FaRegCalendarCheck } from 'react-icons/fa';
 import './styles.css';
 import { PerfilContext } from '../contexts';
 
 const Drawer = ({ isOpen, onClose }) => {
   const drawerRef = useRef(null);
-  const { logout } = useContext(PerfilContext); 
+  const { user, logout } = useContext(PerfilContext);
   const navigate = useNavigate(); 
 
   useEffect(() => {
@@ -43,6 +43,16 @@ const Drawer = ({ isOpen, onClose }) => {
         <Link to="/ajuda" className="drawer-link" onClick={onClose}>
           <FaQuestionCircle /> Ajuda
         </Link>
+        {user.role === 'admin' && (
+          <Link to="/adicionar" className="drawer-link" onClick={onClose}>
+            <FaUserPlus /> Adicionar Funcionário
+          </Link>
+        )}
+        {user.role === 'admin' && (
+          <Link to="/justificativa" className="drawer-link" onClick={onClose}>
+          <FaRegCalendarCheck /> Justificativa Funcionário
+          </Link>
+        )}
         <button className="drawer-link" onClick={handleLogout}>
           <FaSignOutAlt /> Sair
         </button>

@@ -1,50 +1,47 @@
-.drawer {
-    width: 250px;
-    background-color: #333;
-    position: fixed;
-    top: 0;
-    left: -250px;
-    height: 100%;
-    transition: left 0.3s ease;
-    z-index: 1000;
-  }
-  
-  .drawer.open {
-    left: 0;
-  }
-  
-  .drawer-nav {
-    display: flex;
-    flex-direction: column;
-    padding-top: 20px;
-  }
-  
-  .drawer-link {
-    color: white;
-    text-decoration: none;
-    padding: 15px 20px;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    background-color: transparent; /* Background color for links */
-    border: none; /* Remove border for button */
-    cursor: pointer; /* Change cursor to pointer for button */
-  }
-
-  .drawer-link:hover {
-    background-color: #444; /* Hover color for both links and button */
+/* Adiciona uma classe de contêiner para o Drawer */
+.drawer-container .drawer {
+  width: 250px;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  left: -250px; /* Inicialmente fora da tela */
+  height: 100%;
+  transition: left 0.3s ease;
+  z-index: 1000; /* Garante que o Drawer fique acima do conteúdo */
 }
-  
-  .drawer-link:hover {
-    background-color: #444;
-  }
-  
-  .drawer-link svg {
-    margin-right: 10px;
-  }
-  
-  .drawer-link.button {
-    background-color: transparent; /* Ensure button background is transparent */
-    border: none; /* Remove border for button */
-    cursor: pointer; /* Ensure cursor is pointer for button */
+
+.drawer-container .drawer.open {
+  left: 0; /* Mostra o Drawer quando aberto */
+}
+
+.drawer-container .drawer-nav {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+
+.drawer-container .drawer-link {
+  color: white;
+  text-decoration: none;
+  padding: 15px 20px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  background-color: transparent; /* Background color for links */
+  border: none; /* Remove border for button */
+  cursor: pointer; /* Change cursor to pointer for button */
+}
+
+.drawer-container .drawer-link:hover {
+  background-color: #444; /* Hover color for both links and button */
+}
+
+.drawer-container .drawer-link svg {
+  margin-right: 10px;
+}
+
+.drawer-container .drawer-link.button {
+  background-color: transparent; /* Ensure button background is transparent */
+  border: none; /* Remove border for button */
+  cursor: pointer; /* Ensure cursor is pointer for button */
 }
