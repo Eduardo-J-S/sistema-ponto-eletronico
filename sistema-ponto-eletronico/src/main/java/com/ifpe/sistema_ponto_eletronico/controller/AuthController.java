@@ -38,7 +38,7 @@ public class AuthController {
                         "Usuário não encontrado! Para matricula: " + body.matricula()));
         if (passwordEncoder.matches(body.senha(), funcionario.getSenha())) {
             String token = this.tokenService.generateToken(funcionario);
-            return ResponseEntity.ok(new FuncionarioLoginResponseDTO(funcionario.getId(), funcionario.getNome(), funcionario.getMatricula(), funcionario.getRole().getRole(), token));
+            return ResponseEntity.ok(new FuncionarioLoginResponseDTO(funcionario.getId(), funcionario.getNome(), funcionario.getMatricula(), funcionario.getRole().getRole(), funcionario.getEmpresa().getId(), token));
         }
         return ResponseEntity.badRequest().build();
     }
@@ -67,7 +67,7 @@ public class AuthController {
             funcionarioRepository.save(admin);
 
             String token = this.tokenService.generateToken(admin);
-            return ResponseEntity.ok(new FuncionarioLoginResponseDTO(admin.getId(), admin.getNome(), admin.getMatricula(), admin.getRole().getRole(), token));
+            return ResponseEntity.ok(new FuncionarioLoginResponseDTO(admin.getId(), admin.getNome(), admin.getMatricula(), admin.getRole().getRole(), admin.getEmpresa().getId(), token));
         }
         return ResponseEntity.badRequest().build();
     }

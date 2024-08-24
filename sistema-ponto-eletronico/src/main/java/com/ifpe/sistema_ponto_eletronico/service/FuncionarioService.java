@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +34,9 @@ public class FuncionarioService {
 
     @Autowired
     EmpresaRepository empresaRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     
     public FuncionarioDTO findById(Long id) {
         logger.info("Finding one person!");
@@ -69,6 +73,7 @@ public class FuncionarioService {
 
         Funcionario funcionario = mapperConvert.convertObject(funcionarioDTO, Funcionario.class);
         funcionario.setEmpresa(empresa);
+        funcionario.setSenha(passwordEncoder.encode(funcionarioDTO.getSenha()));
 
         return mapperConvert.convertObject(funcionarioRepository.save(funcionario), FuncionarioDTO.class);
     }
@@ -86,7 +91,7 @@ public class FuncionarioService {
         funcionario.setMatricula(funcionarioDTO.getMatricula());
         funcionario.setDataNascimento(funcionarioDTO.getDataNascimento());
         funcionario.setCpf(funcionarioDTO.getCpf());
-        funcionario.setSenha(funcionarioDTO.getSenha());
+        funcionario.setSenha(passwordEncoder.encode(funcionarioDTO.getSenha()));
         funcionario.setEmpresa(funcionario.getEmpresa());
         funcionario.setRegistrosPonto(funcionario.getRegistrosPonto());
         funcionario.setRole(funcionarioDTO.getRole());

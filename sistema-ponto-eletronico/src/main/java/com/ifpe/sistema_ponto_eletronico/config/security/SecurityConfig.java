@@ -44,7 +44,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/registroponto/**").hasAnyRole("USER", "ADMIN")
 
                         // Permitir acesso a relatórios para ADMIN
-                        .requestMatchers("/excel").hasRole("ADMIN")
+                        .requestMatchers("/excel").hasAnyRole("USER","ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
