@@ -13,6 +13,7 @@ import com.ifpe.sistema_ponto_eletronico.model.Funcionario;
 import com.ifpe.sistema_ponto_eletronico.model.Horario;
 import com.ifpe.sistema_ponto_eletronico.repository.FuncionarioRepository;
 import com.ifpe.sistema_ponto_eletronico.repository.HorarioRepository;
+import com.ifpe.sistema_ponto_eletronico.service.exceptions.DataBindingViolationException;
 import com.ifpe.sistema_ponto_eletronico.service.exceptions.ObjectNotFoundException;
 
 @Service
@@ -69,5 +70,25 @@ public class HorarioService {
         horario.setFuncionario(horarioDTO.getFuncionario());
         
         return mapperConvert.convertObject(horarioRepository.save(horario), HorarioDTO.class);
+    }
+
+    public void delete(Long id) {
+        logger.info("Deleting one hour!");
+    
+        // Busca o horário pelo ID ou lança uma exceção se não encontrado
+        Horario horario = horarioRepository.findById(id).orElseThrow(() -> 
+            new ObjectNotFoundException("Horário não encontrado! Id: " + id + ", Tipo: " + Horario.class.getName()));
+    
+        // Desassocia o horário do funcionário e limpa os campos
+        horario.getFuncionario().getHorarios().removeIf(h -> h.getId().equals(horario.getId()));
+    
+        try {
+            // Exclui o horário do repositório
+            horarioRepository.delete(horario);
+            logger.info("Hour deleted successfully!");
+        } catch (Exception e) {
+            // Trata a exceção em caso de falha na exclusão
+            throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas!");
+        }
     }
 }
