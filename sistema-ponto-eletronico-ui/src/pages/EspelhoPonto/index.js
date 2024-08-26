@@ -14,7 +14,7 @@ const EspelhoDePonto = () => {
   const [error, setError] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const { espelhoDePonto, user } = useContext(PerfilContext)
+  const { baixarEspelhoDePonto, user } = useContext(PerfilContext)
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -30,8 +30,10 @@ const EspelhoDePonto = () => {
     setError(null);
 
     try {
-      const response = await espelhoDePonto(user.cpf, dataInicio, dataFim, user.status);
+      const response = await baixarEspelhoDePonto(user.cpf, dataInicio, dataFim, user.status);
       //setDadosPonto(response.data);
+      console.log(user.cpf, dataInicio, dataFim, user.status)
+      console.log(user)
     } catch (err) {
       setError(err.message);
     } finally {

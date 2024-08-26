@@ -159,7 +159,7 @@ const ContextProvider = ({ children }) => {
           },
         }
       );
-      return { success: true };
+      return { success: true, response: response.data };
     } catch (error) {
       console.error("Erro ao cadastrar horario:", error);
       alert("Ocorreu algum erro ao cadastrar o horario.");
@@ -252,16 +252,21 @@ const ContextProvider = ({ children }) => {
     }
   }
 
-  async function espelhoDePonto(
+  async function baixarEspelhoDePonto(
     cpf,
     dataInicio,
     dataFim,
     status
   ) {
     try {
-      const response = await api.get(
-        `excel?cpf=${cpf}&dataInicio=${dataInicio}&dataFim=${dataFim}&status=${status}`,
+      const response = await api.get("excel",
         {
+          params: {
+            cpf: cpf,
+            dataInicio: dataInicio,
+            dataFim: dataFim,
+            status: status,
+          },
           headers: {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
@@ -272,15 +277,93 @@ const ContextProvider = ({ children }) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'espelho_ponto.xls'); // Nome do arquivo
+      link.setAttribute('download', `espelho_de_ponto_${cpf}.xls`); // Nome do arquivo
       document.body.appendChild(link);
       link.click();
       link.remove();
 
       return { success: true };
     } catch (error) {
-      console.error("Erro ao fazer download:", error);
-      alert("Ocorreu algum erro ao fazer download.");
+      console.error("Erro ao baixar espelho de ponto:", error);
+      alert("Ocorreu algum erro ao baixar o espelho de ponto.");
+      return { success: false };
+    }
+  }
+
+  async function buscarHorarios(
+    cpfOrMatricula
+  ) {
+    try {
+      const response = await api.get(`api/horario/v1`,
+        {
+        params: {
+          cpfOrMatricula: cpfOrMatricula
+        },
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          }
+        }
+      );
+
+      return { success: true, response: response.data };
+    } catch (error) {
+      console.error("Erro ao buscar horarios:", error);
+      alert("Ocorreu algum erro ao buscar os horarios.");
+      return { success: false };
+    }
+  }
+
+  async function atualizarHorario(
+    id,
+    diaSemana,
+    horaInicio,
+    horaFim,
+    funcionarioId
+  ) {
+    try {
+      const response = await api.post(
+        `api/horario/v1`,
+        {
+          id: id,
+          diaSemana: diaSemana,
+          horaInicio: horaInicio,
+          horaFim: horaFim,
+          funcionario: {
+            id: funcionarioId
+          }
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        }
+      );
+      return { success: true };
+    } catch (error) {
+      console.error("Erro ao atualizar um horario:", error);
+      alert("Ocorreu algum erro ao atualizar um horario.");
+      return { success: false };
+    }
+  }
+
+  async function deletarHorario(
+    id
+  ) {
+    try {
+      const response = await api.delete(
+        `api/horario/v1/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        }
+      );
+      return { success: true };
+    } catch (error) {
+      console.error("Erro ao deletar horario:", error);
+      alert("Ocorreu algum erro ao deletar um horario.");
       return { success: false };
     }
   }
@@ -300,7 +383,10 @@ const ContextProvider = ({ children }) => {
         buscarFuncionarioCpfOuMatricula,
         ausencia,
         permissao,
-        espelhoDePonto
+        baixarEspelhoDePonto,
+        buscarHorarios,
+        atualizarHorario,
+        deletarHorario
       }}
     >
       {children}

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaHome, FaClipboard, FaLock, FaQuestionCircle, FaSignOutAlt, FaUserPlus, FaRegCalendarCheck } from 'react-icons/fa';
+import { FaHome, FaClipboard, FaLock, FaQuestionCircle, FaSignOutAlt, FaUserPlus, FaRegCalendarCheck, FaClock } from 'react-icons/fa';
 import './styles.css';
 import { PerfilContext } from '../contexts';
 
@@ -51,6 +51,11 @@ const Drawer = ({ isOpen, onClose }) => {
         {user.role === 'admin' && (
           <Link to="/justificativa" className="drawer-link" onClick={onClose}>
           <FaRegCalendarCheck /> Justificativa Funcionário
+          </Link>
+        )}
+        {user.role === 'admin' && (
+          <Link to="/editarHorario" className="drawer-link" onClick={onClose}>
+          <FaClock  /> Editar Horário
           </Link>
         )}
         <button className="drawer-link" onClick={handleLogout}>
