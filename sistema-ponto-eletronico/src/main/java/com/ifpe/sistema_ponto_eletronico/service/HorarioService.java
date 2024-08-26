@@ -28,10 +28,10 @@ public class HorarioService {
     @Autowired
     FuncionarioRepository funcionarioRepository;
 
-    public List<HorarioDTO> findHorariosByFuncionarioCpf(Funcionario funcionarioCpf) {
+    public List<HorarioDTO> findHorariosByFuncionarioCpf(String funcionarioCpf) {
         logger.info("Finding hours for employee with CPF: " + funcionarioCpf);
 
-        Funcionario funcionario = funcionarioRepository.findByCpfOrMatricula(funcionarioCpf.getCpf())
+        Funcionario funcionario = funcionarioRepository.findByCpfOrMatricula(funcionarioCpf)
             .orElseThrow(() -> new ObjectNotFoundException("Funcionario não encontrada! CPF: " + funcionarioCpf));
 
         List<Horario> horarios = horarioRepository.findByFuncionario(funcionario);

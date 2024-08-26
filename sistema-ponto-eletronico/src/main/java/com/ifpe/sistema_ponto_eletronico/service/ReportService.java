@@ -117,9 +117,6 @@ public class ReportService {
             long resultadoHoraExtra = 0;
             long resultadoHoraFalta = 0;
 
-            System.out.println("Contador " + permissaoCount);
-
-            System.out.println(currentPermissao.getTipoPermissao());
 
             // Adicionando permissoes no relatorio
             if (currentPermissao != null && !currentDate.isBefore(currentPermissao.getDataInicio())

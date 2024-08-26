@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ifpe.sistema_ponto_eletronico.convert.ModelMapperConvert;
 import com.ifpe.sistema_ponto_eletronico.dto.HorarioDTO;
-import com.ifpe.sistema_ponto_eletronico.model.Funcionario;
 import com.ifpe.sistema_ponto_eletronico.service.HorarioService;
 
 import jakarta.validation.Valid;
@@ -26,13 +25,10 @@ import jakarta.validation.Valid;
 public class HorarioController {
 
     @Autowired
-    ModelMapperConvert modelMapper;
-
-    @Autowired
     HorarioService horarioService;
 
-    @GetMapping()
-    public ResponseEntity<List<HorarioDTO>> findHorariosByFuncionarioCpf(@RequestBody Funcionario cpf) {
+    @GetMapping(params = "cpfOrMatricula")
+    public ResponseEntity<List<HorarioDTO>> findHorariosByFuncionarioCpf(@RequestParam("cpfOrMatricula") String cpf) {
         List<HorarioDTO> horarios = horarioService.findHorariosByFuncionarioCpf(cpf);
         return ResponseEntity.ok().body(horarios);
     }
