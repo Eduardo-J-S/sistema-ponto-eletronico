@@ -18,11 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ifpe.sistema_ponto_eletronico.convert.ModelMapperConvert;
 import com.ifpe.sistema_ponto_eletronico.dto.HorarioDTO;
-import com.ifpe.sistema_ponto_eletronico.dto.HorarioRequestDTO;
 import com.ifpe.sistema_ponto_eletronico.service.HorarioService;
 
 import jakarta.validation.Valid;
-import java.time.DayOfWeek;
 
 @RestController
 @RequestMapping("api/horario/v1")
@@ -42,11 +40,8 @@ public class HorarioController {
     }
 
     @PostMapping()
-    public ResponseEntity<HorarioDTO> create(@Valid @RequestBody HorarioRequestDTO dto){
-        DayOfWeek diaSemana = DayOfWeek.valueOf(dto.getDiaSemana());
-        HorarioDTO horarioDTO = mapperConvert.convertObject(dto, HorarioDTO.class);
-        horarioDTO.setDiaSemana(diaSemana);
-        HorarioDTO createdHorario = horarioService.create(horarioDTO);
+    public ResponseEntity<HorarioDTO> create(@Valid @RequestBody HorarioDTO dto){
+        HorarioDTO createdHorario = horarioService.create(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdHorario);
     }
 

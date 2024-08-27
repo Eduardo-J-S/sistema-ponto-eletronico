@@ -16,4 +16,5 @@ public class FuncionarioResponseDTO  {
     private LocalDate dataNascimento;
     private String cpf;
     private String status;
+    private String role;
 }

@@ -11,6 +11,8 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
     
     Optional<Empresa> findByCnpj(String cnpj);
 
+    Optional<Empresa> findById(Long id);
+
     List<Empresa> findByNomeEmpresa(String nome);
 
     // busca por nome parcial

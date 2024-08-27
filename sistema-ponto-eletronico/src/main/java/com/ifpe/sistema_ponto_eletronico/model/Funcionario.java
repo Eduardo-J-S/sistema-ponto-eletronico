@@ -71,7 +71,7 @@ public class Funcionario implements UserDetails {
     private Set<RegistroPonto> registrosPonto;
 
     @JsonIgnore // Para evitar referência circular
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
         name = "funcionario_horario",
         joinColumns = @JoinColumn(name = "funcionario_id"),

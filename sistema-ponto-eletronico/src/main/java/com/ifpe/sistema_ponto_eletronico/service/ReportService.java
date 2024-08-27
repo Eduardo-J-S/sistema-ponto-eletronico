@@ -161,7 +161,7 @@ public class ReportService {
 
                             if (registro.getTipoRegistro().toString().equals("INICIO")) {
                                 dataRow.createCell(2).setCellValue(registro.getDataHora().toLocalTime().toString());
-                                if (registro.getDataHora().toLocalTime().isAfter(horario.getHoraInicio())) {
+                                if (horario.getHoraInicio() != null && registro.getDataHora().toLocalTime().isAfter(horario.getHoraInicio())) {
                                     Duration duration = Duration.between(
                                             horario.getHoraInicio(), registro.getDataHora().toLocalTime());
 
@@ -176,7 +176,7 @@ public class ReportService {
                                     totalHoraFalta += totalMinutes;
 
                                     dataRow.createCell(5).setCellValue(resultado);
-                                } else if (registro.getDataHora().toLocalTime().isBefore(horario.getHoraInicio())) {
+                                } else if (horario.getHoraInicio() != null && registro.getDataHora().toLocalTime().isBefore(horario.getHoraInicio())) {
                                     Duration duration = Duration.between(
                                             registro.getDataHora().toLocalTime(), horario.getHoraInicio());
 
@@ -195,7 +195,7 @@ public class ReportService {
                             } else if (registro.getTipoRegistro().toString().equals("FIM")) {
                                 dataRow.createCell(3).setCellValue(registro.getDataHora().toLocalTime().toString());
 
-                                if (registro.getDataHora().toLocalTime().isAfter(horario.getHoraFim())) {
+                                if (horario.getHoraFim() != null && registro.getDataHora().toLocalTime().isAfter(horario.getHoraFim())) {
                                     Duration duration = Duration.between(
                                             horario.getHoraFim(), registro.getDataHora().toLocalTime());
 
@@ -210,7 +210,7 @@ public class ReportService {
                                     totalHoraExtra += totalMinutes;
 
                                     dataRow.createCell(4).setCellValue(resultado);
-                                } else if (registro.getDataHora().toLocalTime().isBefore(horario.getHoraFim())) {
+                                } else if (horario.getHoraFim() != null && registro.getDataHora().toLocalTime().isBefore(horario.getHoraFim())) {
                                     Duration duration = Duration.between(
                                             registro.getDataHora().toLocalTime(), horario.getHoraFim());
 
