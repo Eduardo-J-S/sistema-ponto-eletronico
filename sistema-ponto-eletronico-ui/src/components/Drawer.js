@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaHome, FaClipboard, FaLock, FaQuestionCircle, FaSignOutAlt, FaUserPlus, FaRegCalendarCheck, FaClock } from 'react-icons/fa';
+import { FaHome, FaClipboard, FaLock, FaQuestionCircle, FaSignOutAlt, FaUserPlus, FaRegCalendarCheck, FaClock, FaUserTie } from 'react-icons/fa';
 import './styles.css';
 import { PerfilContext } from '../contexts';
 
@@ -40,9 +40,6 @@ const Drawer = ({ isOpen, onClose }) => {
         <Link to="/alterar" className="drawer-link" onClick={onClose}>
           <FaLock /> Alterar Senha
         </Link>
-        <Link to="/ajuda" className="drawer-link" onClick={onClose}>
-          <FaQuestionCircle /> Ajuda
-        </Link>
         {user.role === 'admin' && (
           <Link to="/adicionar" className="drawer-link" onClick={onClose}>
             <FaUserPlus /> Adicionar Funcionário
@@ -58,6 +55,14 @@ const Drawer = ({ isOpen, onClose }) => {
           <FaClock  /> Editar Horário
           </Link>
         )}
+        {user.role === 'admin' && (
+          <Link to="/gerenciarFuncionarios" className="drawer-link" onClick={onClose}>
+          <FaUserTie  /> Gerenciar Funcionarios
+          </Link>
+        )}
+        <Link to="/ajuda" className="drawer-link" onClick={onClose}>
+          <FaQuestionCircle /> Ajuda
+        </Link>
         <button className="drawer-link" onClick={handleLogout}>
           <FaSignOutAlt /> Sair
         </button>

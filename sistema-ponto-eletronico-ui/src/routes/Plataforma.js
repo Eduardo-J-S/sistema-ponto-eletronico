@@ -8,6 +8,8 @@ import { PerfilContext } from "../contexts";
 import AdicionarFuncionario from "../pages/AdicionarFuncionario";
 import Justificativa from "../pages/Justificativa";
 import EditarHorarios from "../pages/EditarHorarios";
+import GerenciarFuncionarios from "../pages/GerenciarFuncionarios";
+import Ajuda from "../pages/Ajuda";
 
 const Plataforma = () => {
   const { user } = useContext(PerfilContext);
@@ -25,6 +27,10 @@ const Plataforma = () => {
       {user.role === 'admin' && (
         <Route path="/editarHorario" element={<EditarHorarios />} />
       )}
+      {user.role === 'admin' && (
+        <Route path="/gerenciarFuncionarios" element={<GerenciarFuncionarios />} />
+      )}
+      <Route path="/ajuda" element={<Ajuda />} />
     </Routes>
   );
 };

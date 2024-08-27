@@ -368,6 +368,45 @@ const ContextProvider = ({ children }) => {
     }
   }
 
+
+  async function buscarFuncionarosEmpresa() {
+    try {
+      const response = await api.get(
+        `api/funcionario/v1/empresaId/${user.empresaID}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        }
+      );
+      return { success: true, response: response.data };
+    } catch (error) {
+      console.error("Erro ao buscar funcionários:", error);
+      alert("Ocorreu algum erro ao buscar os funcionários.");
+      return { success: false };
+    }
+  }
+
+  async function deletarFuncionario(id) {
+    try {
+      await api.delete(
+        `api/funcionario/v1/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        }
+      );
+      return { success: true};
+    } catch (error) {
+      console.error("Erro ao deletar funcionário:", error);
+      alert("Ocorreu algum erro ao deletar o funcionário.");
+      return { success: false };
+    }
+  }
+
   return (
     <PerfilContext.Provider
       value={{
@@ -386,7 +425,9 @@ const ContextProvider = ({ children }) => {
         baixarEspelhoDePonto,
         buscarHorarios,
         atualizarHorario,
-        deletarHorario
+        deletarHorario,
+        buscarFuncionarosEmpresa,
+        deletarFuncionario
       }}
     >
       {children}
