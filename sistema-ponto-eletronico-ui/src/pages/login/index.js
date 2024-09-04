@@ -58,6 +58,12 @@ const Login = () => {
             onChange={(e) => setSenha(e.target.value)}
           />
         </div>
+        {/* Link para "Esqueceu sua senha?" */}
+        <div className="forgot-password-container">
+          <Link to="/forgot-password" className="forgot-password-link">
+            Esqueceu sua senha?
+          </Link>
+        </div>
         <nav className="register-container-login">
           <p>
             Não possui uma conta?{" "}

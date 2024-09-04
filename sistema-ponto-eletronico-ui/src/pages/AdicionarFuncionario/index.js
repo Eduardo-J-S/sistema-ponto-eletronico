@@ -1,11 +1,10 @@
 import React, { useState, useContext } from "react";
-import Drawer from "../../components/Drawer";
 import { FaBars } from "react-icons/fa";
 import "./styles.css";
 import { PerfilContext } from "../../contexts";
+import Drawer from "../../components/Drawer";
 
 const AdicionarFuncionario = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [funcionario, setFuncionario] = useState({
     nome: "",
     telefone: "",
@@ -31,9 +30,11 @@ const AdicionarFuncionario = () => {
 
   const { AdicionarFuncionario, AdicionarHorario } = useContext(PerfilContext);
 
-  const handleDrawerToggle = () => {
-    setIsDrawerOpen(!isDrawerOpen);
-  };
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+    const toggleDrawer = () => {
+      setIsDrawerOpen(!isDrawerOpen);
+    };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -59,10 +60,6 @@ const AdicionarFuncionario = () => {
       );
 
       if (response.success) {
-        // setFuncionario({
-        //     ...funcionario,
-        //     funcionarioId: response.id
-        // })
         setHorario({
           ...horario,
           funcionarioId: response.response.id,
@@ -86,7 +83,7 @@ const AdicionarFuncionario = () => {
         horario.funcionarioId
       );
       if (response.success) {
-        alert("Horario adicionado com sucesso");
+        alert("Horário adicionado com sucesso");
       }
     } catch (error) {
       console.error("Erro ao adicionar horário:", error);
@@ -94,144 +91,143 @@ const AdicionarFuncionario = () => {
   };
 
   return (
-    <div className="drawer-container">
-      <Drawer isOpen={isDrawerOpen} onClose={handleDrawerToggle} />
-      <div className="content">
+    <div className="content">
+       <div className="drawer-container">
+        <Drawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
         {!isDrawerOpen && (
-          <FaBars className="menu-icon" onClick={handleDrawerToggle} />
+          <FaBars className="menu-icon" onClick={toggleDrawer} />
         )}
-        <div className="adicionar-funcionario-page">
-          <h1>Adicionar Funcionário</h1>
-          <form onSubmit={handleSubmitFuncionario}>
-            <input
-              type="text"
-              name="nome"
-              value={funcionario.nome}
-              onChange={handleInputChange}
-              placeholder="Nome"
-              required
-              disabled={isFuncionarioAdded}
-            />
-            <input
-              type="text"
-              name="telefone"
-              value={funcionario.telefone}
-              onChange={handleInputChange}
-              placeholder="Telefone"
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              value={funcionario.email}
-              onChange={handleInputChange}
-              placeholder="Email"
-              required
-              disabled={isFuncionarioAdded}
-            />
-            <input
-              type="text"
-              name="matricula"
-              value={funcionario.matricula}
-              onChange={handleInputChange}
-              placeholder="Matrícula"
-              required
-              disabled={isFuncionarioAdded}
-            />
-            <input
-              type="date"
-              name="dataNascimento"
-              value={funcionario.dataNascimento}
-              onChange={handleInputChange}
-              required
-              disabled={isFuncionarioAdded}
-            />
-            <input
-              type="text"
-              name="cpf"
-              value={funcionario.cpf}
-              onChange={handleInputChange}
-              placeholder="CPF"
-              required
-              disabled={isFuncionarioAdded}
-            />
-            <input
-              type="password"
-              name="senha"
-              value={funcionario.senha}
-              onChange={handleInputChange}
-              placeholder="Senha"
-              required
-              disabled={isFuncionarioAdded}
-            />
-            <button type="submit" disabled={isFuncionarioAdded}>
-              Adicionar Funcionário
-            </button>
-          </form>
+      <div className="adicionar-funcionario-page">
+        <h1>Adicionar Funcionário</h1>
+        <form onSubmit={handleSubmitFuncionario}>
+          <input
+            type="text"
+            name="nome"
+            value={funcionario.nome}
+            onChange={handleInputChange}
+            placeholder="Nome"
+            required
+            disabled={isFuncionarioAdded}
+          />
+          <input
+            type="text"
+            name="telefone"
+            value={funcionario.telefone}
+            onChange={handleInputChange}
+            placeholder="Telefone"
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            value={funcionario.email}
+            onChange={handleInputChange}
+            placeholder="Email"
+            required
+            disabled={isFuncionarioAdded}
+          />
+          <input
+            type="text"
+            name="matricula"
+            value={funcionario.matricula}
+            onChange={handleInputChange}
+            placeholder="Matrícula"
+            required
+            disabled={isFuncionarioAdded}
+          />
+          <input
+            type="date"
+            name="dataNascimento"
+            value={funcionario.dataNascimento}
+            onChange={handleInputChange}
+            required
+            disabled={isFuncionarioAdded}
+          />
+          <input
+            type="text"
+            name="cpf"
+            value={funcionario.cpf}
+            onChange={handleInputChange}
+            placeholder="CPF"
+            required
+            disabled={isFuncionarioAdded}
+          />
+          <input
+            type="password"
+            name="senha"
+            value={funcionario.senha}
+            onChange={handleInputChange}
+            placeholder="Senha"
+            required
+            disabled={isFuncionarioAdded}
+          />
+          <button type="submit" disabled={isFuncionarioAdded}>
+            Adicionar Funcionário
+          </button>
+        </form>
 
-          {isFuncionarioAdded && (
-            <div className="user-info">
-              <h2>Informações do Usuário</h2>
-              <p>
-                <strong>Funcionário ID:</strong> {horario.funcionarioId}
-              </p>
-              <p>
-                <strong>Nome:</strong> {funcionario.nome}
-              </p>
-              <p>
-                <strong>Email:</strong> {funcionario.email}
-              </p>
-              <p>
-                <strong>Telefone:</strong> {funcionario.telefone}
-              </p>
-              <p>
-                <strong>Email:</strong> {funcionario.matricula}
-              </p>
-              <p>
-                <strong>Empresa:</strong> {funcionario.cpf}
-              </p>
-              {/* Adicione mais informações conforme necessário */}
-            </div>
-          )}
+        {isFuncionarioAdded && (
+          <div className="user-info">
+            <h2>Informações do Usuário</h2>
+            <p>
+              <strong>Funcionário ID:</strong> {horario.funcionarioId}
+            </p>
+            <p>
+              <strong>Nome:</strong> {funcionario.nome}
+            </p>
+            <p>
+              <strong>Email:</strong> {funcionario.email}
+            </p>
+            <p>
+              <strong>Telefone:</strong> {funcionario.telefone}
+            </p>
+            <p>
+              <strong>Email:</strong> {funcionario.matricula}
+            </p>
+            <p>
+              <strong>Empresa:</strong> {funcionario.cpf}
+            </p>
+          </div>
+        )}
 
-          <h2>Adicionar Horário de Trabalho</h2>
-          <form onSubmit={handleSubmitHorario}>
-            <select
-              name="diaSemana"
-              value={horario.diaSemana}
-              onChange={handleHorarioChange}
-              disabled={!isHorarioEnabled}
-            >
-              <option value="">Selecione um dia</option>
-              <option value="MONDAY">Segunda-feira</option>
-              <option value="TUESDAY">Terça-feira</option>
-              <option value="WEDNESDAY">Quarta-feira</option>
-              <option value="THURSDAY">Quinta-feira</option>
-              <option value="FRIDAY">Sexta-feira</option>
-              <option value="SATURDAY">Sábado</option>
-              <option value="SUNDAY">Domingo</option>
-            </select>
-            <input
-              type="time"
-              name="horaInicio"
-              value={horario.horaInicio}
-              onChange={handleHorarioChange}
-              required
-              disabled={!isHorarioEnabled}
-            />
-            <input
-              type="time"
-              name="horaFim"
-              value={horario.horaFim}
-              onChange={handleHorarioChange}
-              required
-              disabled={!isHorarioEnabled}
-            />
-            <button type="submit" disabled={!isHorarioEnabled}>
-              Adicionar Horário
-            </button>
-          </form>
-        </div>
+        <h2>Adicionar Horário de Trabalho</h2>
+        <form onSubmit={handleSubmitHorario}>
+          <select
+            name="diaSemana"
+            value={horario.diaSemana}
+            onChange={handleHorarioChange}
+            disabled={!isHorarioEnabled}
+          >
+            <option value="">Selecione um dia</option>
+            <option value="MONDAY">Segunda-feira</option>
+            <option value="TUESDAY">Terça-feira</option>
+            <option value="WEDNESDAY">Quarta-feira</option>
+            <option value="THURSDAY">Quinta-feira</option>
+            <option value="FRIDAY">Sexta-feira</option>
+            <option value="SATURDAY">Sábado</option>
+            <option value="SUNDAY">Domingo</option>
+          </select>
+          <input
+            type="time"
+            name="horaInicio"
+            value={horario.horaInicio}
+            onChange={handleHorarioChange}
+            required
+            disabled={!isHorarioEnabled}
+          />
+          <input
+            type="time"
+            name="horaFim"
+            value={horario.horaFim}
+            onChange={handleHorarioChange}
+            required
+            disabled={!isHorarioEnabled}
+          />
+          <button type="submit" disabled={!isHorarioEnabled}>
+            Adicionar Horário
+          </button>
+        </form>
+      </div>
       </div>
     </div>
   );

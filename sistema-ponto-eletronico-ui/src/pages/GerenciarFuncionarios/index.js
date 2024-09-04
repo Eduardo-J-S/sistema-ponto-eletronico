@@ -22,7 +22,7 @@ const GerenciarFuncionarios = () => {
     };
 
     fetchData();
-  }, [user.empresaID]);
+  }, [user.empresaID, buscarFuncionarosEmpresa]);
 
   const handleDelete = async (id) => {
     const response = await deletarFuncionario(id);

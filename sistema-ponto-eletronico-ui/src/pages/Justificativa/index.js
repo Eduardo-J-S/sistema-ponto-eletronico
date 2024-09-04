@@ -5,7 +5,6 @@ import Drawer from "../../components/Drawer";
 import { FaBars } from "react-icons/fa";
 
 const Justificativa = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [cpfOrMatricula, setCpfOrMatricula] = useState("");
   const [funcionario, setFuncionario] = useState(null);
   const [tipo, setTipo] = useState("PERMISSAO"); // 'PERMISSAO' ou 'AUSENCIA'
@@ -18,6 +17,12 @@ const Justificativa = () => {
   const { buscarFuncionarioCpfOuMatricula, ausencia, permissao } =
     useContext(PerfilContext);
 
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
+
   const fetchFuncionario = async () => {
     try {
       const response = await buscarFuncionarioCpfOuMatricula(cpfOrMatricula);
@@ -29,10 +34,6 @@ const Justificativa = () => {
     } catch (error) {
       console.error("Erro ao buscar funcionário:", error);
     }
-  };
-
-  const handleDrawerToggle = () => {
-    setIsDrawerOpen(!isDrawerOpen);
   };
 
   const handleTipoChange = (e) => {
@@ -79,9 +80,9 @@ const Justificativa = () => {
   return (
     <div className="justificativaContainer">
       <div className="drawer-container">
-        <Drawer isOpen={isDrawerOpen} onClose={handleDrawerToggle} />
+        <Drawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
         {!isDrawerOpen && (
-          <FaBars className="menu-icon" onClick={handleDrawerToggle} />
+          <FaBars className="menu-icon" onClick={toggleDrawer} />
         )}
         <h1 className="justificativaTitle">Gerenciar Funcionário</h1>
         <div className="justificativaSearchForm">

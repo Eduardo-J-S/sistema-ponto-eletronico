@@ -7,7 +7,7 @@ import { FaBars } from "react-icons/fa";
 function EditarHorarios() {
   const [cpf, setCpf] = useState("");
   const [horarios, setHorarios] = useState([]);
-  const [isFuncionarioAdded, setIsFuncionarioAdded] = useState(true);
+  const [isFuncionarioAdded, setIsFuncionarioAdded] = useState(true); // Começa como true
   const { buscarHorarios, atualizarHorario, deletarHorario, AdicionarHorario } =
     useContext(PerfilContext);
 
@@ -27,14 +27,15 @@ function EditarHorarios() {
       const response = await buscarHorarios(cpf);
 
       if (response.success) {
-        setIsFuncionarioAdded(false);
         setHorarios(response.response);
         console.log(response.response);
         if (response.response.length > 0) {
           setFuncionario(response.response[0].funcionario);
           console.log(response.response[0].funcionario);
+          setIsFuncionarioAdded(false); // Habilita o botão "Adicionar Novo Horário"
         } else {
           setFuncionario(null);
+          setIsFuncionarioAdded(true); // Desabilita o botão "Adicionar Novo Horário"
         }
       }
     } catch (error) {
@@ -189,7 +190,7 @@ function EditarHorarios() {
               </div>
             ))}
             <button
-              disabled={isFuncionarioAdded}
+              disabled={isFuncionarioAdded} // Desabilita o botão se nenhum funcionário foi encontrado
               className="add-btn"
               onClick={adicionarHorario}
             >
@@ -201,7 +202,11 @@ function EditarHorarios() {
             <p className="no-horarios">
               Nenhum horário encontrado para este CPF.
             </p>
-            <button className="add-btn" onClick={adicionarHorario}>
+            <button
+              disabled={isFuncionarioAdded} // Desabilita o botão se nenhum funcionário foi encontrado
+              className="add-btn"
+              onClick={adicionarHorario}
+            >
               Adicionar Novo Horário
             </button>
           </div>

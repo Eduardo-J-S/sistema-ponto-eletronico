@@ -1,0 +1,85 @@
+/* CSS para JustificativaFuncionario */
+
+.justificativaContainerFuncionario {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.justificativaTitleFuncionario {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.justificativaListFuncionario {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.justificativaListFuncionario h2 {
+  font-size: 20px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.justificativaListFuncionario ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.justificativaListFuncionario li {
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.justificativaListFuncionario li strong {
+  color: #333;
+}
+
+.justificativaActionFormFuncionario {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.justificativaActionFormRadioGroupFuncionario {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.justificativaActionFormRadioGroupLabelFuncionario {
+  font-size: 16px;
+  color: #333;
+}
+
+.justificativaActionFormInputFuncionario {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.justificativaActionFormButtonFuncionario {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+
+.justificativaActionFormButtonFuncionario:hover {
+  background-color: #0056b3;
+}
